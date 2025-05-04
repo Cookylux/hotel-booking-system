@@ -8,7 +8,7 @@ package hotel_booking;
  *
  * @author rieje
  */
-public class admin_home extends javax.swing.JFrame {
+public class admin_home {
 
     /**
      * Creates new form admin_home

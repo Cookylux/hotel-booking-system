@@ -10,14 +10,14 @@ import java.sql.*;
  *
  * @author rieje
  */
-public class user_login extends userlogin {
+public class user_login  {
 
     /**
      * Creates new form user_login
      */
     public user_login() {
         initComponents();
-        Douserlogin();
+     
     }
 
     /**

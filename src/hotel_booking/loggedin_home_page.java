@@ -8,7 +8,7 @@ package hotel_booking;
  *
  * @author rieje
  */
-public class loggedin_home_page extends javax.swing.JFrame {
+public class loggedin_home_page {
 
     /**
      * Creates new form my_booking_page

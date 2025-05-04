@@ -11,7 +11,7 @@ import java.sql.SQLException;
  *
  * @author rieje
  */
-public class booking extends registration {
+public class booking {
 
     /**
      * Creates new form user_booking_details_page

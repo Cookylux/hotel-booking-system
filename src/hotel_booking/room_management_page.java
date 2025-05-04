@@ -11,15 +11,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author rieje
  */
-public class room_management_page extends roommanagement {
+public class room_management_page{
     DefaultTableModel tbModel = new DefaultTableModel();
     /**
      * Creates new form room_management_page
      */
     public room_management_page() {
         initComponents();
-        Doroommanagement();
-        Select();
+       
     }
     public void Select(){
         int x = 0;
