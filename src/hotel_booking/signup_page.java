@@ -52,6 +52,8 @@ public class signup_page extends javax.swing.JFrame {
         txt_fn6 = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel17 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        txt_fn7 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -147,15 +149,20 @@ public class signup_page extends javax.swing.JFrame {
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255, 200));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel36.setFont(new java.awt.Font("Nirmala Text", 1, 24)); // NOI18N
         jLabel36.setText("Sign up");
+        jPanel7.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 30, 109, -1));
 
         jLabel37.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel37.setText("First name:");
+        jPanel7.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, -1, -1));
 
         jLabel38.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel38.setText("Last name:");
+        jLabel38.setText("Username:");
+        jPanel7.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, 25));
+        jPanel7.add(txt_fn, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 350, -1));
 
         jButton6.setText("Confirm");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -163,21 +170,33 @@ public class signup_page extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
+        jPanel7.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 376, -1, -1));
+        jPanel7.add(txt_fn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 170, -1));
 
         jLabel44.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel44.setText("Username:");
+        jLabel44.setText("Email:");
+        jPanel7.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, -1, 25));
+        jPanel7.add(txt_fn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 350, -1));
 
         jLabel45.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel45.setText("Birthday:");
+        jPanel7.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, -1, 25));
+        jPanel7.add(txt_fn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 350, -1));
 
         jLabel46.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel46.setText("Contact Number:");
+        jPanel7.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, -1, 25));
+        jPanel7.add(txt_fn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 350, -1));
 
         jLabel47.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel47.setText("Password:");
+        jPanel7.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, -1, 25));
+        jPanel7.add(txt_fn5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 350, -1));
 
         jLabel48.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel48.setText("Confirm Password:");
+        jPanel7.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, -1, 25));
+        jPanel7.add(txt_fn6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, 350, -1));
 
         jCheckBox1.setText("I agree to the");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -185,6 +204,7 @@ public class signup_page extends javax.swing.JFrame {
                 jCheckBox1ActionPerformed(evt);
             }
         });
+        jPanel7.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 356, -1, -1));
 
         jLabel17.setForeground(new java.awt.Color(0, 153, 255));
         jLabel17.setText("terms and conditions");
@@ -193,97 +213,12 @@ public class signup_page extends javax.swing.JFrame {
                 jLabel17MouseClicked(evt);
             }
         });
+        jPanel7.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 358, -1, -1));
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(jLabel37)
-                        .addGap(67, 67, 67)
-                        .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_fn1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_fn2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel46)
-                            .addComponent(jLabel47)
-                            .addComponent(txt_fn3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_fn5, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_fn4, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel48)
-                            .addComponent(txt_fn, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_fn6, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel38)
-                            .addComponent(jLabel44)
-                            .addComponent(jLabel45)))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(jCheckBox1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel17))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(360, 360, 360)
-                        .addComponent(jButton6)))
-                .addContainerGap())
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel37))
-                    .addComponent(jLabel36))
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_fn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(txt_fn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(180, 180, 180)
-                        .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(120, 120, 120)
-                        .addComponent(txt_fn3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addComponent(txt_fn5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(txt_fn4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(220, 220, 220)
-                        .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(txt_fn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(240, 240, 240)
-                        .addComponent(txt_fn6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(4, 4, 4)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jLabel17))
-                .addComponent(jButton6))
-        );
+        jLabel39.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel39.setText("Last Name:");
+        jPanel7.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, -1, -1));
+        jPanel7.add(txt_fn7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 170, -1));
 
         jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, 500, 450));
 
@@ -387,6 +322,7 @@ public class signup_page extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
@@ -402,5 +338,6 @@ public class signup_page extends javax.swing.JFrame {
     private javax.swing.JTextField txt_fn4;
     private javax.swing.JTextField txt_fn5;
     private javax.swing.JTextField txt_fn6;
+    private javax.swing.JTextField txt_fn7;
     // End of variables declaration//GEN-END:variables
 }
