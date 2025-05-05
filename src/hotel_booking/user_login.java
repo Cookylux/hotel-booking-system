@@ -1,6 +1,7 @@
 package hotel_booking;
-import javax.swing.JOptionPane;
 import java.sql.*;
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -10,13 +11,14 @@ import java.sql.*;
  *
  * @author rieje
  */
-public class user_login  {
-
+public class user_login extends connect{
+  
     /**
      * Creates new form user_login
      */
     public user_login() {
         initComponents();
+        Doconnect();
      
     }
 
@@ -39,16 +41,16 @@ public class user_login  {
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        LUser = new javax.swing.JTextField();
+        userN = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
-        LType = new javax.swing.JComboBox<>();
+        usertype = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        LUser1 = new javax.swing.JTextField();
+        pass = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -154,12 +156,12 @@ public class user_login  {
         jLabel5.setText("Username:");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, -1, -1));
 
-        LUser.addActionListener(new java.awt.event.ActionListener() {
+        userN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LUserActionPerformed(evt);
+                userNActionPerformed(evt);
             }
         });
-        jPanel2.add(LUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 350, 27));
+        jPanel2.add(userN, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 350, 27));
 
         jButton1.setText("Log in");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -189,13 +191,13 @@ public class user_login  {
         });
         jPanel2.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, -1, -1));
 
-        LType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select User", "Customer", "Admin" }));
-        LType.addActionListener(new java.awt.event.ActionListener() {
+        usertype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select User", "Customer", "Admin" }));
+        usertype.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LTypeActionPerformed(evt);
+                usertypeActionPerformed(evt);
             }
         });
-        jPanel2.add(LType, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 150, 100, -1));
+        jPanel2.add(usertype, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 150, 100, -1));
 
         jLabel16.setText("Don't have an account?");
         jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 316, -1, -1));
@@ -213,12 +215,12 @@ public class user_login  {
         jLabel7.setText("Password:");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, -1, -1));
 
-        LUser1.addActionListener(new java.awt.event.ActionListener() {
+        pass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LUser1ActionPerformed(evt);
+                passActionPerformed(evt);
             }
         });
-        jPanel2.add(LUser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 350, 27));
+        jPanel2.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 350, 27));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, 498, 440));
 
@@ -237,107 +239,84 @@ public class user_login  {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String u, p, ut, user, pass, newUser, newPass, newUtype, tuser, tpass, ttype;
-       newUser = String.valueOf(LUser.getText());
-       newPass = String.valueOf(LPass.getText());
-       newUtype = String.valueOf(LType.getSelectedItem());
-       
-       try {
-           rs=stmt.executeQuery("SELECT * ");
-           while(rs.next()){
-               u = rs.getString("USERNAME");
-               p = rs.getString("PASWRD");
-               ut = rs.getString("USERTYPE");
-               
-               if (newUser.equals(u)){
-                   if(newPass.equals(p)){
-                       if(newUtype.equals(ut)){
-                           tuser = newUser;
-                           tpass = newPass;
-                           ttype = newUtype;
-                           if(newUtype.equals("Admin")){
-                               new admin_home().setVisible(true);
-                               user_login.this.dispose();
-                               rs.close();
-                           }
-                           else if (newUtype.equals("Customer")){
-                                new booking_overview().setVisible(true);
-                               user_login.this.dispose();
-                               rs.close();
+        username= String.valueOf(userN.getText());
+        new_pass= String.valueOf(pass.getText());
+        newusertype= String.valueOf(usertype.getSelectedItem());
+        try{
+            rs= stmt.executeQuery("SELECT * FROM HOTELUWU.ACCOUNT");
+            while(rs.next()){
+               n= rs.getString("USERNAME");
+               s= rs.getString("PASSWORD");
+               u= rs.getString("USERTYPE");
+               if(username == n) {
+                   if(new_pass.equals(s)){
+                       if(newusertype.equals(u)){
+                           temp_user= username;
+                           temp_pass= new_pass;
+                           temp_usertype= newusertype;
+                           
+                            if(newusertype.equals("Admin")){
+                             new admin_home().setVisible(true);
+                             user_login.this.dispose();
+                             rs.close();
                             
-                           }else{
-                               JOptionPane.showMessageDialog(user_login.this, "Use for admin only!");
-                           }
+                        }
+                            else{
+                                new loggedin_home_page().setVisible(true);
+                                user_login.this.dispose();
+                                rs.close();
+                            
+                        }
                        }
                    }
                }
-               
-           }
-           if (newUser != null){
-               if (newPass != null){
-                   if(newUtype != null){
-                       JOptionPane.showMessageDialog(null, "Incorrect Username/Password!");
-                       LUser.setText(null);
-                       LPass.setText(null);
-                   }
-               }
-           }
-
-        }catch(SQLException e){
+            }
+            if(username != temp_user) {
+                if(newusertype != temp_usertype) {
+                    JOptionPane.showMessageDialog(null, "Incorrect username, password or user type!");
+                    userN.setText(null);
+                    pass.setText(null);
+                }
+            }
+        }catch(SQLException e) {
             System.out.println(e);
         }
-       if (LType.getSelectedIndex()== 1){
-        loggedin_home_page n=new loggedin_home_page();
-        n.setVisible(true);
-        this.setVisible(false);
-        }else if (LType.getSelectedIndex()== 2){
-        admin_home n=new admin_home();
-        n.setVisible(true);
-        this.setVisible(false);
-        }
+    
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
-        forgot_password_page n=new forgot_password_page();
-        n.setVisible(true);
-        this.setVisible(false);
+
     }//GEN-LAST:event_jLabel10MouseClicked
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-        if (jCheckBox1.isSelected()){
-            LPass.setEchoChar((char)0);
-        }
-        else {
-            LPass.setEchoChar('*');
-        }
+
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
-    private void LTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LTypeActionPerformed
+    private void usertypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usertypeActionPerformed
          
-    }//GEN-LAST:event_LTypeActionPerformed
+    }//GEN-LAST:event_usertypeActionPerformed
 
     private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel17MouseClicked
 
-    private void LUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LUserActionPerformed
+    private void userNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_LUserActionPerformed
+    }//GEN-LAST:event_userNActionPerformed
 
-    private void LUser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LUser1ActionPerformed
+    private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_LUser1ActionPerformed
+    }//GEN-LAST:event_passActionPerformed
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-        home_page n=new home_page();
-        n.setVisible(true);
-        this.setVisible(false);
+
     }//GEN-LAST:event_jLabel12MouseClicked
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        user_login n=new user_login();
-        n.setVisible(true);
+        user_login a=new user_login();
+        a.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jLabel13MouseClicked
 
@@ -375,7 +354,7 @@ public class user_login  {
             java.util.logging.Logger.getLogger(user_login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -385,9 +364,6 @@ public class user_login  {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> LType;
-    private javax.swing.JTextField LUser;
-    private javax.swing.JTextField LUser1;
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel10;
@@ -406,6 +382,9 @@ public class user_login  {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JTextField pass;
+    private javax.swing.JTextField userN;
+    private javax.swing.JComboBox<String> usertype;
     // End of variables declaration//GEN-END:variables
 
     private void elif(boolean equals) {
