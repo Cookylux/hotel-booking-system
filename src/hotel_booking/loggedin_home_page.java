@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package hotel_booking;
-
+import javax.swing.JFrame;
 /**
  *
  * @author rieje
  */
-public class loggedin_home_page {
+public class loggedin_home_page extends javax.swing.JFrame  {
 
     /**
      * Creates new form my_booking_page
@@ -88,7 +88,7 @@ public class loggedin_home_page {
         jPanel2.add(jSpinner2, new org.netbeans.lib.awtextra.AbsoluteConstraints(189, 58, 135, -1));
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(80, 380, 903, 110);
+        jPanel2.setBounds(80, 380, 900, 100);
 
         jPanel5.setBackground(new java.awt.Color(75, 59, 91));
 
@@ -291,7 +291,5 @@ public class loggedin_home_page {
     private javax.swing.JSpinner jSpinner4;
     // End of variables declaration//GEN-END:variables
 
-    void setVisible(boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 }

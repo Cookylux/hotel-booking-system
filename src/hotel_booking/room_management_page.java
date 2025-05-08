@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author rieje
  */
-public class room_management_page{
+public class room_management_page extends javax.swing.JFrame{
     DefaultTableModel tbModel = new DefaultTableModel();
     /**
      * Creates new form room_management_page

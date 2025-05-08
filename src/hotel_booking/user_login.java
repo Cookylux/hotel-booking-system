@@ -11,14 +11,16 @@ import javax.swing.JOptionPane;
  *
  * @author rieje
  */
-public class user_login extends connect{
-  
+public class user_login extends javax.swing.JFrame{
+  Connection con= javaconnect.connectdb();
+  PreparedStatement ps=null;
+  ResultSet rs=null;
     /**
      * Creates new form user_login
      */
     public user_login() {
         initComponents();
-        Doconnect();
+        javaconnect.connectdb();
      
     }
 
@@ -50,7 +52,7 @@ public class user_login extends connect{
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        pass = new javax.swing.JTextField();
+        pass = new javax.swing.JPasswordField();
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -214,13 +216,7 @@ public class user_login extends connect{
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jLabel7.setText("Password:");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, -1, -1));
-
-        pass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passActionPerformed(evt);
-            }
-        });
-        jPanel2.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 350, 27));
+        jPanel2.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 350, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, 498, 440));
 
@@ -239,47 +235,37 @@ public class user_login extends connect{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        username= String.valueOf(userN.getText());
-        new_pass= String.valueOf(pass.getText());
-        newusertype= String.valueOf(usertype.getSelectedItem());
+        String login= "SELECT * FROM GROUP4.ACCOUNT WHERE username = ? AND password = ? AND usertype = ?";
         try{
-            rs= stmt.executeQuery("SELECT * FROM HOTELUWU.ACCOUNT");
-            while(rs.next()){
-               n= rs.getString("USERNAME");
-               s= rs.getString("PASSWORD");
-               u= rs.getString("USERTYPE");
-               if(username == n) {
-                   if(new_pass.equals(s)){
-                       if(newusertype.equals(u)){
-                           temp_user= username;
-                           temp_pass= new_pass;
-                           temp_usertype= newusertype;
-                           
-                            if(newusertype.equals("Admin")){
-                             new admin_home().setVisible(true);
-                             user_login.this.dispose();
-                             rs.close();
-                            
-                        }
-                            else{
-                                new loggedin_home_page().setVisible(true);
-                                user_login.this.dispose();
-                                rs.close();
-                            
-                        }
-                       }
-                   }
-               }
-            }
-            if(username != temp_user) {
-                if(newusertype != temp_usertype) {
-                    JOptionPane.showMessageDialog(null, "Incorrect username, password or user type!");
-                    userN.setText(null);
-                    pass.setText(null);
+            ps= con.prepareStatement(login);
+            ps.setString(1,userN.getText());
+            ps.setString(2,pass.getText());
+            ps.setString(3, usertype.getSelectedItem().toString());
+            rs= ps.executeQuery();
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Login Successfully");
+
+                String selectedUserType = usertype.getSelectedItem().toString();
+
+                if ("Admin".equalsIgnoreCase(selectedUserType)) {
+
+                    admin_home adminPage = new admin_home();
+                    adminPage.setVisible(true);
+                } else if ("Customer".equalsIgnoreCase(selectedUserType)) {
+
+                    loggedin_home_page customerPage = new loggedin_home_page();
+                    customerPage.setVisible(true);
                 }
+            this.setVisible(false);
+                
+              
+            }else{
+                JOptionPane.showMessageDialog(null, "Wrong Username, Usertype or Password!");
             }
-        }catch(SQLException e) {
-            System.out.println(e);
+            
+        }catch(SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+            
         }
     
         
@@ -287,11 +273,17 @@ public class user_login extends connect{
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
-
+        forgot_password_page j=new forgot_password_page();
+        j.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jLabel10MouseClicked
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-
+    if (jCheckBox1.isSelected()){
+        pass.setEchoChar((char)0);
+    }else {
+        pass.setEchoChar('*');
+    }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void usertypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usertypeActionPerformed
@@ -299,33 +291,36 @@ public class user_login extends connect{
     }//GEN-LAST:event_usertypeActionPerformed
 
     private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
-        // TODO add your handling code here:
+        signup_page n=new signup_page();
+        n.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jLabel17MouseClicked
 
     private void userNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userNActionPerformed
 
-    private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passActionPerformed
-
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-
+        home_page n=new home_page();
+        n.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jLabel12MouseClicked
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        user_login a=new user_login();
-        a.setVisible(true);
-        this.setVisible(false);
+        
     }//GEN-LAST:event_jLabel13MouseClicked
 
     private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
-        // TODO add your handling code here:
+        signup_page n=new signup_page();
+        n.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jLabel15MouseClicked
 
     private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
-        // TODO add your handling code here:
+        stay_page n=new stay_page();
+        n.setVisible(true);
+        this.setVisible(false);
+        
     }//GEN-LAST:event_jLabel18MouseClicked
 
     /**
@@ -382,12 +377,10 @@ public class user_login extends connect{
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JTextField pass;
+    private javax.swing.JPasswordField pass;
     private javax.swing.JTextField userN;
     private javax.swing.JComboBox<String> usertype;
     // End of variables declaration//GEN-END:variables
 
-    private void elif(boolean equals) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+  
 }

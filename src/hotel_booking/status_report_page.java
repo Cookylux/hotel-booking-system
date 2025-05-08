@@ -8,7 +8,7 @@ package hotel_booking;
  *
  * @author rieje
  */
-public class status_report_page{
+public class status_report_page extends javax.swing.JFrame{
 
     /**
      * Creates new form status_report_page

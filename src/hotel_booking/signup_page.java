@@ -8,7 +8,7 @@ package hotel_booking;
  *
  * @author rieje
  */
-public class signup_page {
+public class signup_page extends javax.swing.JFrame {
 
     /**
      * Creates new form signup_page

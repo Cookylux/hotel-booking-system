@@ -8,7 +8,7 @@ package hotel_booking;
  *
  * @author rieje
  */
-public class home_page {
+public class home_page extends javax.swing.JFrame{
 
     /**
      * Creates new form first_view_interface
@@ -376,4 +376,6 @@ public class home_page {
     private javax.swing.JSpinner jSpinner3;
     private javax.swing.JSpinner jSpinner4;
     // End of variables declaration//GEN-END:variables
+
+    
 }

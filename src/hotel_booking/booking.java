@@ -11,14 +11,14 @@ import java.sql.SQLException;
  *
  * @author rieje
  */
-public class booking {
+public class booking extends javax.swing.JFrame {
 
     /**
      * Creates new form user_booking_details_page
      */
     public booking() {
         initComponents();
-        Doregistration();
+
     }
 
     /**
@@ -199,32 +199,7 @@ public class booking {
     }//GEN-LAST:event_jLabel14MouseClicked
 
     private void proceedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proceedActionPerformed
-        try{
-        String price;
-            int proceed;
-        int pri = Integer.parseInt(txt_prices.getText());
-            int con = Integer.parseInt(cn.getText());
-            int ad = Integer.parseInt(adult.getText());
-            int ch = Integer.parseInt(kids.getText());
-            int rr = Integer.parseInt(rooms.getText());
-            String typer = cb_roomtype.getSelectedItem().toString();
-            rs.updateString("NAME", name.getText());
-            rs.updateInt("PRICE", pri );
-            rs.updateString("ROOMTYPE", cb_roomtype.getSelectedItem().toString());
-            rs.updateString("EMAIL", email.getText());
-            rs.updateString("GENDER", gender.getText());
-            rs.updateString("CHECKIN", checkin.getText());
-            rs.updateString("CHECKOUT", checkout.getText());
-            rs.updateInt("ADULT", ad);
-            rs.updateInt("CHILDREN", ch);
-            price = compute(rr, typer);
-            txt_prices.setText(price);
-
-            
-        proceed = JOptionPane.showConfirmDialog(null, "Booking Succesful, your total price is" + "Pesos");
-        }catch(SQLException ex){
-            java.util.logging.Logger.getLogger(room_management_page.class.getName()).log(java.util.logging.Level.SEVERE, null,ex);
-        }
+        
     }//GEN-LAST:event_proceedActionPerformed
 
     private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
@@ -246,27 +221,7 @@ public class booking {
     private void name4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_name4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_name4ActionPerformed
-    public static void compute(int rr, String rt){
-        int sr;
-        int dr;
-        int tr;
-        int qr;
-        int pr;
-        String sf;
-        if(rt == "Single Room"){
-            pr = 2999 * rr;
-            return pr;
-        }else if(rt == "Double Room"){
-            pr = 9599 * rr;
-        }else if(rt == "Triple Room"){
-            tr = 15600;
-            pr = tr * rr;
-        }else if(rt == "Quad Room"){
-            pr = 20000 * rr;
-        }
-     sf = (Integer.toString(pr));
-     return sf;       
-    };
+    
     /**
      * @param args the command line arguments
      */
@@ -338,4 +293,7 @@ public class booking {
     private javax.swing.JButton proceed;
     private javax.swing.JTextField txt_prices;
     // End of variables declaration//GEN-END:variables
+
+    
+    
 }

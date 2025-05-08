@@ -8,7 +8,7 @@ package hotel_booking;
  *
  * @author rieje
  */
-public class forgot_pass2_page{
+public class forgot_pass2_page extends javax.swing.JFrame{
 
     /**
      * Creates new form forgot_pass2_page

@@ -8,7 +8,7 @@ package hotel_booking;
  *
  * @author rieje
  */
-public class forgot_password_page {
+public class forgot_password_page extends javax.swing.JFrame {
 
     /**
      * Creates new form forgot_password_page
@@ -220,4 +220,6 @@ public class forgot_password_page {
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
+
+    
 }

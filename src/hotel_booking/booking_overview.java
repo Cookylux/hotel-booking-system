@@ -8,7 +8,7 @@ package hotel_booking;
  *
  * @author rieje
  */
-public class booking_overview {
+public class booking_overview extends javax.swing.JFrame{
 
     /**
      * Creates new form booking_page
