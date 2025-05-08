@@ -1,7 +1,7 @@
-Thu May 08 11:44:15 AWST 2025 : Apache Derby Network Server - 10.17.1.0 - (1913217) started and ready to accept connections on port 1527
+Thu May 08 14:04:40 AWST 2025 : Apache Derby Network Server - 10.17.1.0 - (1913217) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Thu May 08 11:44:16 AWST 2025:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-0196-adfe-7116-0000371d63a6 
+Thu May 08 14:04:40 AWST 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-0196-ae7e-fc85-0000371d63a6 
 on database directory C:\Users\my pc\Documents\NetBeansProjects\hotel-booking-system\HOTELSYS with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@70dea4e 
 Loaded from file:/C:/Users/my%20pc/Documents/Java%20Imports/db-derby-10.17.1.0-bin/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -13,213 +13,13 @@ os.version=10.0
 derby.system.home=C:\Users\my pc\Documents\NetBeansProjects\hotel-booking-system
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Thu May 08 11:44:24 AWST 2025:
-Shutting down instance a816c00e-0196-adfe-7116-0000371d63a6 on database directory C:\Users\my pc\Documents\NetBeansProjects\hotel-booking-system\HOTELSYS with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@70dea4e 
-Thu May 08 11:44:24 AWST 2025 Thread[#28,DRDAConnThread_3,5,main] (DATABASE = HOTELSYS), (DRDAID = {2}), Database 'HOTELSYS' shutdown.
-Thu May 08 11:44:53 AWST 2025 Thread[#26,DRDAConnThread_2,5,main] Cleanup action starting
-java.sql.SQLException: Database 'Hotel_Booking' not found.
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:115)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
-	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
-	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
-	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
-	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
-	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
-	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
-	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
-	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
-Caused by: ERROR XJ004: Database 'Hotel_Booking' not found.
-	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
-	... 17 more
-============= begin nested exception, level (1) ===========
-ERROR XJ004: Database 'Hotel_Booking' not found.
-	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
-	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
-	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
-	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
-	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
-	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
-	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
-	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
-	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
-============= end nested exception, level (1) ===========
-Cleanup action completed
-Thu May 08 11:44:53 AWST 2025 Thread[#26,DRDAConnThread_2,5,main] (DATABASE = Hotel_Booking), (DRDAID = {3}), Database 'Hotel_Booking' not found.
-Thu May 08 11:44:56 AWST 2025 Thread[#28,DRDAConnThread_3,5,main] Cleanup action starting
-java.sql.SQLException: Database 'Hotel_Booking' not found.
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:115)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
-	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
-	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
-	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
-	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
-	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
-	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
-	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
-	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
-Caused by: ERROR XJ004: Database 'Hotel_Booking' not found.
-	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
-	... 17 more
-============= begin nested exception, level (1) ===========
-ERROR XJ004: Database 'Hotel_Booking' not found.
-	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
-	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
-	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
-	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
-	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
-	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
-	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
-	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
-	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
-============= end nested exception, level (1) ===========
-Cleanup action completed
-Thu May 08 11:44:56 AWST 2025 Thread[#28,DRDAConnThread_3,5,main] (DATABASE = Hotel_Booking), (DRDAID = {4}), Database 'Hotel_Booking' not found.
-Thu May 08 11:45:05 AWST 2025 Thread[#26,DRDAConnThread_2,5,main] Cleanup action starting
-java.sql.SQLException: Database 'Hotel_Booking' not found.
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:115)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
-	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
-	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
-	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
-	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
-	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
-	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
-	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
-	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
-Caused by: ERROR XJ004: Database 'Hotel_Booking' not found.
-	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
-	... 17 more
-============= begin nested exception, level (1) ===========
-ERROR XJ004: Database 'Hotel_Booking' not found.
-	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
-	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
-	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
-	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
-	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
-	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
-	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
-	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
-	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
-============= end nested exception, level (1) ===========
-Cleanup action completed
-Thu May 08 11:45:05 AWST 2025 Thread[#26,DRDAConnThread_2,5,main] (DATABASE = Hotel_Booking), (DRDAID = {5}), Database 'Hotel_Booking' not found.
-Thu May 08 11:45:13 AWST 2025 Thread[#28,DRDAConnThread_3,5,main] Cleanup action starting
-java.sql.SQLException: Database 'Hotel_Booking' not found.
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:115)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
-	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
-	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
-	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
-	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
-	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
-	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
-	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
-	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
-Caused by: ERROR XJ004: Database 'Hotel_Booking' not found.
-	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
-	... 17 more
-============= begin nested exception, level (1) ===========
-ERROR XJ004: Database 'Hotel_Booking' not found.
-	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
-	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
-	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
-	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
-	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
-	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
-	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
-	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
-	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
-============= end nested exception, level (1) ===========
-Cleanup action completed
-Thu May 08 11:45:13 AWST 2025 Thread[#28,DRDAConnThread_3,5,main] (DATABASE = Hotel_Booking), (DRDAID = {6}), Database 'Hotel_Booking' not found.
+Thu May 08 14:09:34 AWST 2025:
+Shutting down instance a816c00e-0196-ae7e-fc85-0000371d63a6 on database directory C:\Users\my pc\Documents\NetBeansProjects\hotel-booking-system\HOTELSYS with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@70dea4e 
+Thu May 08 14:09:34 AWST 2025 Thread[#28,DRDAConnThread_3,5,main] (DATABASE = HOTELSYS), (DRDAID = {2}), Database 'HOTELSYS' shutdown.
 ----------------------------------------------------------------
-Thu May 08 11:45:34 AWST 2025:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance 97e00100-0196-adfe-7116-0000371d63a6 
-on database directory C:\Users\my pc\Documents\NetBeansProjects\hotel-booking-system\HOTELSYS with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@70dea4e 
+Thu May 08 14:10:38 AWST 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a094c023-0196-ae7e-fc85-0000371d63a6 
+on database directory C:\Users\my pc\Documents\NetBeansProjects\hotel-booking-system\HOTELSYSTEM with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@70dea4e 
 Loaded from file:/C:/Users/my%20pc/Documents/Java%20Imports/db-derby-10.17.1.0-bin/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=21.0.7+8-LTS-245
@@ -229,53 +29,20 @@ os.arch=amd64
 os.version=10.0
 derby.system.home=C:\Users\my pc\Documents\NetBeansProjects\hotel-booking-system
 Database Class Loader started - derby.database.classpath=''
-Thu May 08 11:45:37 AWST 2025 Thread[#28,DRDAConnThread_3,5,main] Cleanup action starting
-java.sql.SQLException: Database 'Hotel_Booking' not found.
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:115)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
-	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
-	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
-	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
-	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
-	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
-	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
-	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
-	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
-Caused by: ERROR XJ004: Database 'Hotel_Booking' not found.
-	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
-	... 17 more
-============= begin nested exception, level (1) ===========
-ERROR XJ004: Database 'Hotel_Booking' not found.
-	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
-	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
-	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
-	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
-	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
-	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
-	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
-	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
-	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
-	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
-============= end nested exception, level (1) ===========
-Cleanup action completed
-Thu May 08 11:45:37 AWST 2025 Thread[#28,DRDAConnThread_3,5,main] (DATABASE = Hotel_Booking), (DRDAID = {8}), Database 'Hotel_Booking' not found.
+----------------------------------------------------------------
+Thu May 08 14:10:52 AWST 2025:
+Shutting down instance a094c023-0196-ae7e-fc85-0000371d63a6 on database directory C:\Users\my pc\Documents\NetBeansProjects\hotel-booking-system\HOTELSYSTEM with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@70dea4e 
+Thu May 08 14:10:52 AWST 2025 Thread[#28,DRDAConnThread_3,5,main] (DATABASE = HOTELSYSTEM), (DRDAID = {4}), Database 'HOTELSYSTEM' shutdown.
+----------------------------------------------------------------
+Thu May 08 14:10:55 AWST 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance 65548115-0196-ae7e-fc85-0000371d63a6 
+on database directory C:\Users\my pc\Documents\NetBeansProjects\hotel-booking-system\HOTELSYSTEM with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@70dea4e 
+Loaded from file:/C:/Users/my%20pc/Documents/Java%20Imports/db-derby-10.17.1.0-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=21.0.7+8-LTS-245
+user.dir=C:\Users\my pc\Documents\Java Imports\db-derby-10.17.1.0-bin
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=C:\Users\my pc\Documents\NetBeansProjects\hotel-booking-system
+Database Class Loader started - derby.database.classpath=''
