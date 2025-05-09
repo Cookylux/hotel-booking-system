@@ -3,18 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package hotel_booking;
-
+import java.sql.*;
+import javax.swing.JOptionPane;
 /**
  *
  * @author rieje
  */
 public class signup_page extends javax.swing.JFrame {
-
+    Connection con= javaconnect.connectdb();
+    PreparedStatement ps=null;
+    ResultSet rs=null;
     /**
      * Creates new form signup_page
      */
     public signup_page() {
-        initComponents();
+
     }
 
     /**
@@ -37,23 +40,23 @@ public class signup_page extends javax.swing.JFrame {
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
-        txt_fn = new javax.swing.JTextField();
+        txt_userN = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
-        txt_fn1 = new javax.swing.JTextField();
+        txt_fn = new javax.swing.JTextField();
         jLabel44 = new javax.swing.JLabel();
-        txt_fn2 = new javax.swing.JTextField();
+        txt_email = new javax.swing.JTextField();
         jLabel45 = new javax.swing.JLabel();
-        txt_fn3 = new javax.swing.JTextField();
+        txt_bday = new javax.swing.JTextField();
         jLabel46 = new javax.swing.JLabel();
-        txt_fn4 = new javax.swing.JTextField();
+        txt_cn = new javax.swing.JTextField();
         jLabel47 = new javax.swing.JLabel();
-        txt_fn5 = new javax.swing.JTextField();
         jLabel48 = new javax.swing.JLabel();
-        txt_fn6 = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel17 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
-        txt_fn7 = new javax.swing.JTextField();
+        txt_ln = new javax.swing.JTextField();
+        txt_cpass = new javax.swing.JPasswordField();
+        txt_pass = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -162,7 +165,7 @@ public class signup_page extends javax.swing.JFrame {
         jLabel38.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel38.setText("Username:");
         jPanel7.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, 25));
-        jPanel7.add(txt_fn, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 350, -1));
+        jPanel7.add(txt_userN, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 350, -1));
 
         jButton6.setText("Confirm");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -171,32 +174,36 @@ public class signup_page extends javax.swing.JFrame {
             }
         });
         jPanel7.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 376, -1, -1));
-        jPanel7.add(txt_fn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 170, -1));
+
+        txt_fn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_fnActionPerformed(evt);
+            }
+        });
+        jPanel7.add(txt_fn, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 170, -1));
 
         jLabel44.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel44.setText("Email:");
         jPanel7.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, -1, 25));
-        jPanel7.add(txt_fn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 350, -1));
+        jPanel7.add(txt_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 350, -1));
 
         jLabel45.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel45.setText("Birthday:");
         jPanel7.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, -1, 25));
-        jPanel7.add(txt_fn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 350, -1));
+        jPanel7.add(txt_bday, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 350, -1));
 
         jLabel46.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel46.setText("Contact Number:");
         jPanel7.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, -1, 25));
-        jPanel7.add(txt_fn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 350, -1));
+        jPanel7.add(txt_cn, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 350, -1));
 
         jLabel47.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel47.setText("Password:");
         jPanel7.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, -1, 25));
-        jPanel7.add(txt_fn5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 350, -1));
 
         jLabel48.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel48.setText("Confirm Password:");
         jPanel7.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, -1, 25));
-        jPanel7.add(txt_fn6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, 350, -1));
 
         jCheckBox1.setText("I agree to the");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -218,7 +225,9 @@ public class signup_page extends javax.swing.JFrame {
         jLabel39.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel39.setText("Last Name:");
         jPanel7.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, -1, -1));
-        jPanel7.add(txt_fn7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 170, -1));
+        jPanel7.add(txt_ln, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 170, -1));
+        jPanel7.add(txt_cpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, 350, -1));
+        jPanel7.add(txt_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 350, -1));
 
         jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, 500, 450));
 
@@ -233,15 +242,20 @@ public class signup_page extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
    
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        String firstname = txt_fn.getText();
-        String lastname = txt_ln.getText();
-        String email = txt_email.getText();
+    String signup= "SELECT * FROM GROUP4.SIGNUP WHERE firstname = ? AND lastname = ? AND username = ? AND email = ? AND contactnum = ? AND password = ?";
+    try{
+       ps= con.prepareStatement(signup);
+       ps.setString(1,txt_fn.getText());
+       ps.setString(2,txt_ln.getText());
+       ps.setString(3,txt_userN.getText());
+       ps.setString(4,txt_email.getText());
+       ps.setString(5,txt_cn.getText());
+       ps.setString(6,txt_pass.getText());
+       ps.setString(7,txt_cpass.getText());
+       
+    }catch(SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
         
-        
-        
-        user_login n=new user_login();
-        n.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -273,6 +287,10 @@ public class signup_page extends javax.swing.JFrame {
     private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel16MouseClicked
+
+    private void txt_fnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_fnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -331,13 +349,13 @@ public class signup_page extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JTextField txt_bday;
+    private javax.swing.JTextField txt_cn;
+    private javax.swing.JPasswordField txt_cpass;
+    private javax.swing.JTextField txt_email;
     private javax.swing.JTextField txt_fn;
-    private javax.swing.JTextField txt_fn1;
-    private javax.swing.JTextField txt_fn2;
-    private javax.swing.JTextField txt_fn3;
-    private javax.swing.JTextField txt_fn4;
-    private javax.swing.JTextField txt_fn5;
-    private javax.swing.JTextField txt_fn6;
-    private javax.swing.JTextField txt_fn7;
+    private javax.swing.JTextField txt_ln;
+    private javax.swing.JPasswordField txt_pass;
+    private javax.swing.JTextField txt_userN;
     // End of variables declaration//GEN-END:variables
 }

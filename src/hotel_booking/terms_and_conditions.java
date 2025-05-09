@@ -52,6 +52,7 @@ public class terms_and_conditions extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
+        btn_ok = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -134,6 +135,14 @@ public class terms_and_conditions extends javax.swing.JFrame {
         jLabel25.setText("We may also disclose information if required by law or legal process.");
         jPanel1.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, -1, 20));
 
+        btn_ok.setText("Confirm");
+        btn_ok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_okActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 600, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -147,6 +156,12 @@ public class terms_and_conditions extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_okActionPerformed
+        signup_page n=new signup_page();
+        n.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_okActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,6 +199,7 @@ public class terms_and_conditions extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_ok;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
