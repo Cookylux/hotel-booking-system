@@ -4,6 +4,8 @@
  */
 package hotel_booking;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.Period;
 import javax.swing.JOptionPane;
 /**
  *
@@ -52,7 +54,7 @@ public class signup_page extends javax.swing.JFrame {
         txt_cn = new javax.swing.JTextField();
         jLabel47 = new javax.swing.JLabel();
         jLabel48 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        cb_agree = new javax.swing.JCheckBox();
         jLabel17 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
         txt_ln = new javax.swing.JTextField();
@@ -207,13 +209,13 @@ public class signup_page extends javax.swing.JFrame {
         jLabel48.setText("Confirm Password:");
         jPanel7.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, -1, 25));
 
-        jCheckBox1.setText("I agree to the");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        cb_agree.setText("I agree to the");
+        cb_agree.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                cb_agreeActionPerformed(evt);
             }
         });
-        jPanel7.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 356, -1, -1));
+        jPanel7.add(cb_agree, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 356, -1, -1));
 
         jLabel17.setForeground(new java.awt.Color(0, 153, 255));
         jLabel17.setText("terms and conditions");
@@ -249,9 +251,9 @@ public class signup_page extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jLabel17MouseClicked
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    private void cb_agreeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_agreeActionPerformed
+        
+    }//GEN-LAST:event_cb_agreeActionPerformed
 
     private void txt_fnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fnActionPerformed
         // TODO add your handling code here:
@@ -259,71 +261,98 @@ public class signup_page extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         if (con != null) {
-    try {
-        String checkUserSQL = "SELECT * FROM GROUP4.SIGNUP WHERE firstname = ? AND lastname = ? AND username = ? AND email = ?";
-        ps = con.prepareStatement(checkUserSQL);
-        ps.setString(1, txt_fn.getText().trim());
-        ps.setString(2, txt_ln.getText().trim());
-        ps.setString(3, txt_userN.getText().trim());
-        ps.setString(4, txt_email.getText().trim());
+            if (txt_fn.getText().trim().isEmpty() || txt_ln.getText().trim().isEmpty() ||
+                txt_userN.getText().trim().isEmpty() || txt_email.getText().trim().isEmpty() ||
+                txt_bday.getText().trim().isEmpty() || txt_cn.getText().trim().isEmpty() ||
+                txt_pass.getText().trim().isEmpty() || txt_cpass.getText().trim().isEmpty()) {
 
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            JOptionPane.showMessageDialog(this, "User already exists!", "Warning", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        java.sql.Date bday;
-        try {
-            bday = java.sql.Date.valueOf(txt_bday.getText().trim());
-        } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(null, "Invalid birthday format. Use YYYY-MM-DD", "Input Error!", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        String contactStr = txt_cn.getText().trim();
-        long contactNum;
-        try {
-            contactNum = Long.parseLong(contactStr);
-            if (contactStr.length() != 11) {
-                JOptionPane.showMessageDialog(null, "Contact number must be 11 digits only!", "Input Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please fill in all required fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Contact number must be digits only.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        String pass = txt_pass.getText();
-        String conpass = txt_cpass.getText();
-        if (!pass.equals(conpass)) {
-            JOptionPane.showMessageDialog(null, "Passwords do not match!", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        String insertSQL = "INSERT INTO GROUP4.SIGNUP (firstname, lastname, username, email, birthday, contactnum, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement insertPs = con.prepareStatement(insertSQL);
-        insertPs.setString(1, txt_fn.getText().trim());
-        insertPs.setString(2, txt_ln.getText().trim());
-        insertPs.setString(3, txt_userN.getText().trim());
-        insertPs.setString(4, txt_email.getText().trim());
-        insertPs.setDate(5, bday);
-        insertPs.setLong(6, contactNum);
-        insertPs.setString(7, pass);
 
-        int insertedRows = insertPs.executeUpdate();
-        if (insertedRows > 0) {
-            JOptionPane.showMessageDialog(this, "Sign Up Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            loggedin_home_page loginhp = new loggedin_home_page();
-                        loginhp.setVisible(true);
-                        this.setVisible(false);
+            if (!cb_agree.isSelected()) {
+                JOptionPane.showMessageDialog(this, "Please read and accept our terms and conditions!", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            try {
+                String checkUserSQL = "SELECT * FROM GROUP4.SIGNUP WHERE firstname = ? AND lastname = ? AND username = ? AND email = ?";
+                ps = con.prepareStatement(checkUserSQL);
+                ps.setString(1, txt_fn.getText().trim());
+                ps.setString(2, txt_ln.getText().trim());
+                ps.setString(3, txt_userN.getText().trim());
+                ps.setString(4, txt_email.getText().trim());
+
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(this, "User already exists!", "Warning", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                 java.sql.Date bday;
+                    try {
+                        bday = java.sql.Date.valueOf(txt_bday.getText().trim());
+                        LocalDate birthDate = bday.toLocalDate();
+                        LocalDate today = LocalDate.now();
+                        int age = Period.between(birthDate, today).getYears();
+
+                        if (age < 18) {
+                            JOptionPane.showMessageDialog(this, "You must be at least 18 years old to sign up.", "Age Restriction", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+
+                    } catch (IllegalArgumentException e) {
+                        JOptionPane.showMessageDialog(null, "Invalid birthday format. Use YYYY-MM-DD", "Input Error!", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                String contactStr = txt_cn.getText().trim();
+                long contactNum;
+                try {
+                    contactNum = Long.parseLong(contactStr);
+                    if (contactStr.length() != 11) {
+                        JOptionPane.showMessageDialog(null, "Contact number must be 11 digits only!", "Input Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Contact number must be digits only.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                String pass = txt_pass.getText();
+                String conpass = txt_cpass.getText();
+                if (!pass.equals(conpass)) {
+                    JOptionPane.showMessageDialog(null, "Passwords do not match!", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                String insertSQL = "INSERT INTO GROUP4.SIGNUP (firstname, lastname, username, email, birthday, contactnum, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement insertPs = con.prepareStatement(insertSQL);
+                insertPs.setString(1, txt_fn.getText().trim());
+                insertPs.setString(2, txt_ln.getText().trim());
+                insertPs.setString(3, txt_userN.getText().trim());
+                insertPs.setString(4, txt_email.getText().trim());
+                insertPs.setDate(5, bday);
+                insertPs.setLong(6, contactNum);
+                insertPs.setString(7, pass);
+
+                int insertedRows = insertPs.executeUpdate();
+                if (insertedRows > 0) {
+                    JOptionPane.showMessageDialog(this, "Sign Up Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    loggedin_home_page loginhp = new loggedin_home_page();
+                    loginhp.setVisible(true);
+                    this.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error during sign-up.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Error during sign-up.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Failed to connect to database", "Connection Error", JOptionPane.ERROR_MESSAGE);
         }
-
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-} else {
-    JOptionPane.showMessageDialog(this, "Failed to connect to database", "Connection Error", JOptionPane.ERROR_MESSAGE);
-}
             
 
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -384,8 +413,8 @@ public class signup_page extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox cb_agree;
     private javax.swing.JButton jButton6;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
