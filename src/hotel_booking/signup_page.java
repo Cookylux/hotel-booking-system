@@ -17,7 +17,8 @@ public class signup_page extends javax.swing.JFrame {
      * Creates new form signup_page
      */
     public signup_page() {
-
+        initComponents();
+        javaconnect.connectdb();
     }
 
     /**
@@ -62,6 +63,7 @@ public class signup_page extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1060, 597));
         setResizable(false);
+        setSize(new java.awt.Dimension(1060, 597));
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(java.awt.SystemColor.controlHighlight);
@@ -240,39 +242,99 @@ public class signup_page extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-   
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-    String signup= "SELECT * FROM GROUP4.SIGNUP WHERE firstname = ? AND lastname = ? AND username = ? AND email = ? AND contactnum = ? AND password = ?";
-    try{
-       ps= con.prepareStatement(signup);
-       ps.setString(1,txt_fn.getText());
-       ps.setString(2,txt_ln.getText());
-       ps.setString(3,txt_userN.getText());
-       ps.setString(4,txt_email.getText());
-       ps.setString(5,txt_cn.getText());
-       ps.setString(6,txt_pass.getText());
-       ps.setString(7,txt_cpass.getText());
-       
-    }catch(SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        
-    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
+        terms_and_conditions n= new terms_and_conditions();
+        n.setVisible(true);
+
+    }//GEN-LAST:event_jLabel17MouseClicked
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
-    private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
-        terms_and_conditions n= new terms_and_conditions();
-        n.setVisible(true);
-        
-    }//GEN-LAST:event_jLabel17MouseClicked
+    private void txt_fnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_fnActionPerformed
 
-    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-        signup_page n=new signup_page();
-        n.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jLabel12MouseClicked
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        if (con != null) {
+    try {
+        String checkUserSQL = "SELECT * FROM GROUP4.SIGNUP WHERE firstname = ? AND lastname = ? AND username = ? AND email = ?";
+        ps = con.prepareStatement(checkUserSQL);
+        ps.setString(1, txt_fn.getText().trim());
+        ps.setString(2, txt_ln.getText().trim());
+        ps.setString(3, txt_userN.getText().trim());
+        ps.setString(4, txt_email.getText().trim());
+
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            JOptionPane.showMessageDialog(this, "User already exists!", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        java.sql.Date bday;
+        try {
+            bday = java.sql.Date.valueOf(txt_bday.getText().trim());
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, "Invalid birthday format. Use YYYY-MM-DD", "Input Error!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String contactStr = txt_cn.getText().trim();
+        long contactNum;
+        try {
+            contactNum = Long.parseLong(contactStr);
+            if (contactStr.length() != 11) {
+                JOptionPane.showMessageDialog(null, "Contact number must be 11 digits only!", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Contact number must be digits only.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String pass = txt_pass.getText();
+        String conpass = txt_cpass.getText();
+        if (!pass.equals(conpass)) {
+            JOptionPane.showMessageDialog(null, "Passwords do not match!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String insertSQL = "INSERT INTO GROUP4.SIGNUP (firstname, lastname, username, email, birthday, contactnum, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement insertPs = con.prepareStatement(insertSQL);
+        insertPs.setString(1, txt_fn.getText().trim());
+        insertPs.setString(2, txt_ln.getText().trim());
+        insertPs.setString(3, txt_userN.getText().trim());
+        insertPs.setString(4, txt_email.getText().trim());
+        insertPs.setDate(5, bday);
+        insertPs.setLong(6, contactNum);
+        insertPs.setString(7, pass);
+
+        int insertedRows = insertPs.executeUpdate();
+        if (insertedRows > 0) {
+            JOptionPane.showMessageDialog(this, "Sign Up Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            loggedin_home_page loginhp = new loggedin_home_page();
+                        loginhp.setVisible(true);
+                        this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error during sign-up.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+} else {
+    JOptionPane.showMessageDialog(this, "Failed to connect to database", "Connection Error", JOptionPane.ERROR_MESSAGE);
+}
+            
+
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel16MouseClicked
+
+    private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel15MouseClicked
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
         user_login n=new user_login();
@@ -280,18 +342,12 @@ public class signup_page extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jLabel13MouseClicked
 
-    private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel15MouseClicked
-
-    private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel16MouseClicked
-
-    private void txt_fnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_fnActionPerformed
-
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+        signup_page n=new signup_page();
+        n.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jLabel12MouseClicked
+   
     /**
      * @param args the command line arguments
      */

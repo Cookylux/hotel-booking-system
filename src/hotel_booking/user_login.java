@@ -235,38 +235,44 @@ public class user_login extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String login= "SELECT * FROM GROUP4.ACCOUNT WHERE username = ? AND password = ? AND usertype = ?";
-        try{
-            ps= con.prepareStatement(login);
-            ps.setString(1,userN.getText());
-            ps.setString(2,pass.getText());
-            ps.setString(3, usertype.getSelectedItem().toString());
-            rs= ps.executeQuery();
-            if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "Login Successfully");
+        String selectedUserType = usertype.getSelectedItem().toString();
+        String loginQuery = "";
 
-                String selectedUserType = usertype.getSelectedItem().toString();
-
-                if ("Admin".equalsIgnoreCase(selectedUserType)) {
-
-                    admin_home adminPage = new admin_home();
-                    adminPage.setVisible(true);
-                } else if ("Customer".equalsIgnoreCase(selectedUserType)) {
-
-                    loggedin_home_page customerPage = new loggedin_home_page();
-                    customerPage.setVisible(true);
-                }
-            this.setVisible(false);
-                
-              
-            }else{
-                JOptionPane.showMessageDialog(null, "Wrong Username, Usertype or Password!");
+            if ("Admin".equalsIgnoreCase(selectedUserType)) {
+                loginQuery = "SELECT * FROM GROUP4.ADMIN WHERE username = ? AND password = ?";
+            } else if ("Customer".equalsIgnoreCase(selectedUserType)) {
+                loginQuery = "SELECT * FROM GROUP4.SIGNUP WHERE username = ? AND password = ?";
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid user type selected.");
+                return;
             }
-            
-        }catch(SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex);
-            
-        }
+
+            try {
+                ps = con.prepareStatement(loginQuery);
+                ps.setString(1, userN.getText().trim());
+                ps.setString(2, pass.getText().trim());
+
+                rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(null, "Login Successfully");
+
+                    if ("Admin".equalsIgnoreCase(selectedUserType)) {
+                        admin_home adminPage = new admin_home();
+                        adminPage.setVisible(true);
+                    } else {
+                        loggedin_home_page customerPage = new loggedin_home_page();
+                        customerPage.setVisible(true);
+                    }
+
+                    this.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Wrong Username or Password!");
+                }
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+            }
     
         
         
