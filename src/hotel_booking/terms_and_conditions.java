@@ -158,8 +158,6 @@ public class terms_and_conditions extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_okActionPerformed
-        signup_page n=new signup_page();
-        n.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btn_okActionPerformed
 

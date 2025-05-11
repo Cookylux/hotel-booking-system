@@ -4,12 +4,24 @@
  */
 package hotel_booking;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author rieje
  */
 public class forgot_password_page extends javax.swing.JFrame {
-
+    Connection con= javaconnect.connectdb();
+    PreparedStatement ps=null;
+    ResultSet rs=null;
     /**
      * Creates new form forgot_password_page
      */
@@ -30,12 +42,14 @@ public class forgot_password_page extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        Confirm = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        txt_username = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txt_npass = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txt_cpass = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1060, 597));
@@ -47,82 +61,62 @@ public class forgot_password_page extends javax.swing.JFrame {
         jLabel1.setText("jLabel1");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setText("Forgot Password");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 20, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        jLabel3.setText("Enter Email:");
+        Confirm.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Confirm.setText("Confirm");
+        Confirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConfirmActionPerformed(evt);
+            }
+        });
+        jPanel2.add(Confirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 380, 130, 30));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        jLabel4.setText("Verification code:");
+        jLabel4.setText("Enter Username:");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 230, 40));
 
-        jButton1.setText("Confirm");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        txt_username.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                txt_usernameActionPerformed(evt);
             }
         });
+        jPanel2.add(txt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 410, 40));
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        jLabel5.setText("New Password:");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 220, 40));
+
+        txt_npass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txt_npassActionPerformed(evt);
             }
         });
+        jPanel2.add(txt_npass, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 410, 40));
 
-        jButton2.setText("Verify Code");
+        jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        jLabel6.setText("Confirm Password:");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 250, 40));
+
+        txt_cpass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_cpassActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txt_cpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, 410, 40));
+
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton2.setText("Back");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(234, 234, 234)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(78, 78, 78)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton1)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(8, 8, 8))
-                            .addComponent(jButton2))))
-                .addContainerGap(105, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel2)
-                .addGap(53, 53, 53)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addGap(62, 62, 62)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPasswordField1)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addContainerGap(169, Short.MAX_VALUE))
-        );
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 380, 130, 30));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -130,19 +124,19 @@ public class forgot_password_page extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(142, 142, 142)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 186, Short.MAX_VALUE))
+                .addGap(92, 92, 92)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 677, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 172, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addGap(0, 482, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(70, 70, 70))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -159,17 +153,73 @@ public class forgot_password_page extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void ConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmActionPerformed
+        try {
+            String username = txt_username.getText().trim();
+            String newPass = txt_npass.getText().trim();
+            String confirmPass = txt_cpass.getText().trim();
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+            if (!newPass.equals(confirmPass)) {
+                JOptionPane.showMessageDialog(null, "Passwords do not match!", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            String checkUserSQL = "SELECT * FROM GROUP4.SIGNUP WHERE username = ?";
+            ps = con.prepareStatement(checkUserSQL);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String updateSQL = "UPDATE GROUP4.SIGNUP SET password = ? WHERE username = ?";
+                ps = con.prepareStatement(updateSQL);
+                ps.setString(1, newPass);
+                ps.setString(2, username);
+ 
+                
+                String npass = txt_npass.getText();
+                String conpass = txt_cpass.getText();
+                if(!npass.equals(conpass)){
+                    JOptionPane.showMessageDialog(null, "Password do not match!", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }else{
+                    int rows = ps.executeUpdate();
+                    if (rows > 0) {
+                        JOptionPane.showMessageDialog(null, "Password updated successfully.");
+                        user_login login = new user_login();
+                        login.setVisible(true);
+                        this.setVisible(false);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Failed to update password.");
+                    }
+                    
+                }
+
+            }else {
+                JOptionPane.showMessageDialog(null, "User not found. Please check your username.");
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_ConfirmActionPerformed
+
+    private void txt_usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_usernameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txt_usernameActionPerformed
+
+    private void txt_npassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_npassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_npassActionPerformed
+
+    private void txt_cpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cpassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_cpassActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        forgot_pass2_page n=new forgot_pass2_page();
-        n.setVisible(true);
+        user_login login = new user_login();
+        login.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -209,16 +259,18 @@ public class forgot_password_page extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton Confirm;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txt_cpass;
+    private javax.swing.JTextField txt_npass;
+    private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
 
     

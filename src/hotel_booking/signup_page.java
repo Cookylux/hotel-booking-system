@@ -322,7 +322,7 @@ public class signup_page extends javax.swing.JFrame {
                 String pass = txt_pass.getText();
                 String conpass = txt_cpass.getText();
                 if (!pass.equals(conpass)) {
-                    JOptionPane.showMessageDialog(null, "Passwords do not match!", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Password do not match!", "Input Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
