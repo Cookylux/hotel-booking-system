@@ -12,3 +12,9 @@ os.arch=amd64
 os.version=10.0
 derby.system.home=C:\Users\rieje\Desktop\COMPPROG\hote_booking
 Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Sun May 11 23:55:50 PST 2025: Shutting down Derby engine
+----------------------------------------------------------------
+Sun May 11 23:55:50 PST 2025:
+Shutting down instance a816c00e-0196-bff7-3e8f-ffff9cba27f9 on database directory C:\Users\rieje\Desktop\COMPPROG\hote_booking\HOTELSYSTEM with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@70dea4e 
+----------------------------------------------------------------
