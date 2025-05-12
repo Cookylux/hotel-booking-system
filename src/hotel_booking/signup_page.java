@@ -7,6 +7,8 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.Period;
 import javax.swing.JOptionPane;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 /**
  *
  * @author rieje
@@ -291,8 +293,9 @@ public class signup_page extends javax.swing.JFrame {
 
                  java.sql.Date bday;
                     try {
-                        bday = java.sql.Date.valueOf(txt_bday.getText().trim());
-                        LocalDate birthDate = bday.toLocalDate();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+
+                        LocalDate birthDate = LocalDate.parse(txt_bday.getText().trim(), formatter);
                         LocalDate today = LocalDate.now();
                         int age = Period.between(birthDate, today).getYears();
 
@@ -301,18 +304,20 @@ public class signup_page extends javax.swing.JFrame {
                             return;
                         }
 
-                    } catch (IllegalArgumentException e) {
-                        JOptionPane.showMessageDialog(null, "Invalid birthday format. Use YYYY-MM-DD", "Input Error!", JOptionPane.ERROR_MESSAGE);
+                        bday = java.sql.Date.valueOf(birthDate);
+
+                    } catch (DateTimeParseException e) {
+                        JOptionPane.showMessageDialog(null, "Invalid birthday format. Use MM-DD-YYYY", "Input Error!", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
 
-                String contactStr = txt_cn.getText().trim();
+                
                 long contactNum;
                 try {
-                    contactNum = Long.parseLong(contactStr);
-                    if (contactStr.length() != 11) {
-                        JOptionPane.showMessageDialog(null, "Contact number must be 11 digits only!", "Input Error", JOptionPane.ERROR_MESSAGE);
-                        return;
+                    String contactStr = txt_cn.getText().trim();
+                    if (!contactStr.matches("\\d{11}")) {
+                    JOptionPane.showMessageDialog(null, "Contact number must be exactly 11 digits.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                     }
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(null, "Contact number must be digits only.", "Input Error", JOptionPane.ERROR_MESSAGE);
@@ -333,13 +338,18 @@ public class signup_page extends javax.swing.JFrame {
                 insertPs.setString(3, txt_userN.getText().trim());
                 insertPs.setString(4, txt_email.getText().trim());
                 insertPs.setDate(5, bday);
-                insertPs.setLong(6, contactNum);
+                
                 insertPs.setString(7, pass);
 
                 int insertedRows = insertPs.executeUpdate();
                 if (insertedRows > 0) {
                     JOptionPane.showMessageDialog(this, "Sign Up Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    loggedin_home_page loginhp = new loggedin_home_page();
+                    
+                    TransferBookSpinner.Email = (String) txt_email.getText();
+                    TransferBookSpinner.lastname = (String) txt_ln.getText();
+                    TransferBookSpinner.firstname = (String) txt_fn.getText();
+                    
+                    booking loginhp = new booking();
                     loginhp.setVisible(true);
                     this.setVisible(false);
                 } else {

@@ -1,6 +1,11 @@
 package hotel_booking;
+import hotel_booking.javaconnect;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.Period;
 import javax.swing.JOptionPane;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import javax.swing.table.DefaultTableModel;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -12,35 +17,56 @@ import javax.swing.table.DefaultTableModel;
  * @author rieje
  */
 public class room_management_page extends javax.swing.JFrame{
+    Connection con= javaconnect.connectdb();
+    PreparedStatement ps = null;
+    ResultSet rs=null;
     DefaultTableModel tbModel = new DefaultTableModel();
     /**
      * Creates new form room_management_page
      */
     public room_management_page() {
         initComponents();
-       
+        javaconnect.connectdb();
+        Select();
     }
-    public void Select(){
-        int x = 0;
-        String [] columnNames = {"ROOMNUMBER", "ROOMTYPE", "BED", "PRICE", "STATUS"};
-        tbModel.setColumnIdentifiers(columnNames);
-        try{
-            while(rs.next()){
-                rm = rs.getString("ROOMNUMBER");
-                rtyp = rs.getString("ROOMTYPE");
-                bed = rs.getString("BED");
-                price = rs.getInt("PRICE");
-                stats = rs.getString("STATUS");
-                jTable1.setVisible(true);
-                tbModel.addRow(new Object[] {rm, rtyp, bed, price, stats});
-                x++;
-                
-                
+        public void Select() {
+            String[] columnNames = {"ROOMNUMBER", "ROOMTYPE", "BED", "PRICE", "STATUS"};
+            tbModel.setColumnIdentifiers(columnNames);
+            tbModel.setRowCount(0);  // Clear table before repopulating
+
+            String sql = "SELECT ROOMNUMBER, ROOMTYPE, BED, PRICE, STATUS FROM rooms";
+
+            try {
+                ps = con.prepareStatement(sql);
+                rs = ps.executeQuery();
+                int x = 0;
+
+                while (rs.next()) {
+                    String rm = rs.getString("ROOMNUMBER");
+                    String rtyp = rs.getString("ROOMTYPE");
+                    String bed = rs.getString("BED");
+                    int price = rs.getInt("PRICE");
+                    String stats = rs.getString("STATUS");
+
+                    tbModel.addRow(new Object[] {rm, rtyp, bed, price, stats});
+                    x++;
+                }
+
+                jTable1.setVisible(x > 0);
+
+                if (x == 0) {
+                    JOptionPane.showMessageDialog(this, "No records found.");
+                }
+
+            } catch (SQLException err) {
+                JOptionPane.showMessageDialog(this, "Error retrieving data: " + err.getMessage());
+            } finally {
+                try { if (rs != null) rs.close(); } catch (SQLException e) {}
+                try { if (ps != null) ps.close(); } catch (SQLException e) {}
             }
-        }catch(SQLException err){
-        JOptionPane.showMessageDialog(room_management_page.this, err.getMessage());
+        }
     }
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -270,15 +296,20 @@ public class room_management_page extends javax.swing.JFrame{
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Room No.", "Room Type", "Title 3", "Title 4"
+                "Room No.", "Room Type", "Bed", "Price", "Status"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 60, 780, 260));
@@ -298,46 +329,83 @@ public class room_management_page extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void bt_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_addActionPerformed
-        try{
-            rs.moveToInsertRow();
-            
-            
-            String roomNumber = txt_room_num.getText();
+        try {
+            String roomNumber;
 
+            // Handle manual room number input
             if (checkbox_addrn.isSelected()) {
-                if (roomNumber.startsWith("R") && roomNumber.length() > 1) {
-                    try {
-                        int number = Integer.parseInt(roomNumber.substring(1));
+                roomNumber = txt_room_num.getText().trim();
 
-                        if (number >= 21 && number <= 30) {
-                            rs.updateString("ROOMNUMBER", roomNumber);
-                        } else {
-                            JOptionPane.showMessageDialog(this, "Room number must be between R01 and R30.");
-                        }
-
-                    } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(this, "Invalid number format in room code!");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Invalid room format! Must start with 'R'.");
+                // Validate format
+                if (!roomNumber.startsWith("R") || roomNumber.length() < 2) {
+                    JOptionPane.showMessageDialog(null, "Invalid room format! Must start with 'R'.");
+                    return;
                 }
-            }else{
-                rs.updateString("ROOMNUMBER", cb_roomnum.getSelectedItem().toString());
-            }
-            int pr = Integer.parseInt(txt_price.getText());
-            rs.updateString("ROOMTYPE", cb_roomtype.getSelectedItem().toString());
-            rs.updateString("BED", txt_bed.getText());
-            rs.updateInt("PRICE", pr );
-            rs.updateString("sTATUS", cb_status.getSelectedItem().toString());
 
-            rs.insertRow();
-            Refresh_RS_STMT();
-            Select();
-            JOptionPane.showMessageDialog(this, "Record Added");
-            
-        }
-        catch (SQLException ex){
-            java.util.logging.Logger.getLogger(room_management_page.class.getName()).log(java.util.logging.Level.SEVERE, null,ex);
+                try {
+                    int number = Integer.parseInt(roomNumber.substring(1));
+                    if (number < 1 || number > 30) {
+                        JOptionPane.showMessageDialog(null, "Room number must be between R01 and R30.");
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Invalid number format in room code!");
+                    return;
+                }
+
+            } else {
+                // If using selected combo box value
+                if (cb_roomnum.getSelectedItem() == null) {
+                    JOptionPane.showMessageDialog(null, "Please select a room number.");
+                    return;
+                }
+                roomNumber = cb_roomnum.getSelectedItem().toString();
+            }
+
+            // Validate and parse price
+            int price;
+            try {
+                price = Integer.parseInt(txt_price.getText().trim());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Price must be a valid number.");
+                return;
+            }
+
+            // Retrieve other field values
+            if (cb_roomtype.getSelectedItem() == null || cb_status.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(null, "Please select all required fields.");
+                return;
+            }
+
+            String roomType = cb_roomtype.getSelectedItem().toString();
+            String bed = txt_bed.getText().trim();
+            String status = cb_status.getSelectedItem().toString();
+
+            // Defensive check
+            if (bed.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Bed field cannot be empty.");
+                return;
+            }
+
+            // SQL Insert
+            String sql = "INSERT INTO rooms (ROOMNUMBER, ROOMTYPE, BED, PRICE, STATUS) VALUES (?, ?, ?, ?, ?)";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, roomNumber);
+            ps.setString(2, roomType);
+            ps.setString(3, bed);
+            ps.setInt(4, price);
+            ps.setString(5, status);
+
+            ps.executeUpdate();
+
+            // Refresh table
+            Select();  
+                JOptionPane.showMessageDialog(null, "Record Added");
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(room_management_page.class.getName())
+                .log(java.util.logging.Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
         }
     }//GEN-LAST:event_bt_addActionPerformed
 
@@ -441,6 +509,10 @@ public class room_management_page extends javax.swing.JFrame{
         n.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton20ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments

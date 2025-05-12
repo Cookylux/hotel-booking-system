@@ -29,9 +29,9 @@ public class booking_details_page extends javax.swing.JFrame{
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        txt_search = new javax.swing.JTextField();
+        btn_confirm = new javax.swing.JButton();
+        btn_clear = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -39,8 +39,8 @@ public class booking_details_page extends javax.swing.JFrame{
         jLabel2 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        btn_accept = new javax.swing.JButton();
+        btn_decline = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -61,20 +61,20 @@ public class booking_details_page extends javax.swing.JFrame{
         jLabel1.setText("Search:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(512, 58, -1, -1));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txt_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txt_searchActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(576, 58, 269, 25));
+        jPanel1.add(txt_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(576, 58, 269, 25));
 
-        jButton6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton6.setText("Confirm");
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(624, 101, -1, -1));
+        btn_confirm.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn_confirm.setText("Confirm");
+        jPanel1.add(btn_confirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(624, 101, -1, -1));
 
-        jButton7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton7.setText("Clear");
-        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(721, 101, -1, -1));
+        btn_clear.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn_clear.setText("Clear");
+        jPanel1.add(btn_clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(721, 101, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(165, 157, 173));
 
@@ -162,25 +162,25 @@ public class booking_details_page extends javax.swing.JFrame{
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        jButton9.setBackground(new java.awt.Color(204, 255, 204));
-        jButton9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton9.setText("Accept");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        btn_accept.setBackground(new java.awt.Color(204, 255, 204));
+        btn_accept.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn_accept.setText("Accept");
+        btn_accept.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                btn_acceptActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 140, -1, -1));
+        jPanel1.add(btn_accept, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 140, -1, -1));
 
-        jButton10.setBackground(new java.awt.Color(255, 204, 204));
-        jButton10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton10.setText("Decline");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        btn_decline.setBackground(new java.awt.Color(255, 204, 204));
+        btn_decline.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn_decline.setText("Decline");
+        btn_decline.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                btn_declineActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 140, -1, -1));
+        jPanel1.add(btn_decline, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 140, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -211,9 +211,9 @@ public class booking_details_page extends javax.swing.JFrame{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txt_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_searchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txt_searchActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         booking_details_page n=new booking_details_page();
@@ -241,13 +241,13 @@ public class booking_details_page extends javax.swing.JFrame{
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void btn_acceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_acceptActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+    }//GEN-LAST:event_btn_acceptActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void btn_declineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_declineActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_btn_declineActionPerformed
 
     /**
      * @param args the command line arguments
@@ -285,14 +285,14 @@ public class booking_details_page extends javax.swing.JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_accept;
+    private javax.swing.JButton btn_clear;
+    private javax.swing.JButton btn_confirm;
+    private javax.swing.JButton btn_decline;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
@@ -301,6 +301,6 @@ public class booking_details_page extends javax.swing.JFrame{
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txt_search;
     // End of variables declaration//GEN-END:variables
 }

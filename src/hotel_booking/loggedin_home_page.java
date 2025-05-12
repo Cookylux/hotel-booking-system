@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package hotel_booking;
+import java.util.Date;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 /**
  *
  * @author rieje
@@ -26,24 +28,24 @@ public class loggedin_home_page extends javax.swing.JFrame  {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel3 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jSpinner3 = new javax.swing.JSpinner();
+        spin_adult = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
-        jSpinner4 = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
+        spin_child = new javax.swing.JSpinner();
+        btn_book = new javax.swing.JButton();
+        date_in = new javax.swing.JSpinner();
+        date_out = new javax.swing.JSpinner();
         jPanel5 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -51,6 +53,44 @@ public class loggedin_home_page extends javax.swing.JFrame  {
         setMinimumSize(new java.awt.Dimension(1060, 597));
         setResizable(false);
         getContentPane().setLayout(null);
+
+        jPanel3.setBackground(new java.awt.Color(0, 0, 0, 200));
+
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("⋆✧˚Welcome to Orvana˚✧⋆");
+
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Booking you a comfy place to spend your time to relax and feel at peace");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(jLabel9)))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(11, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        getContentPane().add(jPanel3);
+        jPanel3.setBounds(220, 200, 630, 100);
 
         jPanel2.setBackground(new java.awt.Color(210, 206, 214, 225));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -64,28 +104,28 @@ public class loggedin_home_page extends javax.swing.JFrame  {
         jLabel5.setText("Adult:");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(487, 27, -1, -1));
 
-        jSpinner3.setModel(new javax.swing.SpinnerNumberModel(0, 0, 10, 1));
-        jPanel2.add(jSpinner3, new org.netbeans.lib.awtextra.AbsoluteConstraints(553, 24, -1, -1));
+        spin_adult.setModel(new javax.swing.SpinnerNumberModel(0, 0, 10, 1));
+        jPanel2.add(spin_adult, new org.netbeans.lib.awtextra.AbsoluteConstraints(553, 24, -1, -1));
 
         jLabel6.setText("Children:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(487, 55, -1, -1));
 
-        jSpinner4.setModel(new javax.swing.SpinnerNumberModel(0, 0, 10, 1));
-        jPanel2.add(jSpinner4, new org.netbeans.lib.awtextra.AbsoluteConstraints(553, 52, -1, -1));
+        spin_child.setModel(new javax.swing.SpinnerNumberModel(0, 0, 10, 1));
+        jPanel2.add(spin_child, new org.netbeans.lib.awtextra.AbsoluteConstraints(553, 52, -1, -1));
 
-        jButton1.setText("Book now");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_book.setText("Book now");
+        btn_book.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_bookActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(736, 43, -1, -1));
+        jPanel2.add(btn_book, new org.netbeans.lib.awtextra.AbsoluteConstraints(736, 43, -1, -1));
 
-        jSpinner1.setModel(new javax.swing.SpinnerDateModel());
-        jPanel2.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(189, 24, 135, -1));
+        date_in.setModel(new javax.swing.SpinnerDateModel());
+        jPanel2.add(date_in, new org.netbeans.lib.awtextra.AbsoluteConstraints(189, 24, 135, -1));
 
-        jSpinner2.setModel(new javax.swing.SpinnerDateModel());
-        jPanel2.add(jSpinner2, new org.netbeans.lib.awtextra.AbsoluteConstraints(189, 58, 135, -1));
+        date_out.setModel(new javax.swing.SpinnerDateModel());
+        jPanel2.add(date_out, new org.netbeans.lib.awtextra.AbsoluteConstraints(189, 58, 135, -1));
 
         getContentPane().add(jPanel2);
         jPanel2.setBounds(80, 380, 900, 100);
@@ -157,44 +197,6 @@ public class loggedin_home_page extends javax.swing.JFrame  {
         getContentPane().add(jPanel5);
         jPanel5.setBounds(0, 0, 1060, 110);
 
-        jPanel3.setBackground(new java.awt.Color(0, 0, 0, 200));
-
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Welcome to Orvana");
-
-        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Booking you a comfy place to spend your time to relax and feel at peace");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(145, 145, 145)
-                        .addComponent(jLabel9)))
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(11, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        getContentPane().add(jPanel3);
-        jPanel3.setBounds(220, 200, 630, 100);
-
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -208,11 +210,30 @@ public class loggedin_home_page extends javax.swing.JFrame  {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_bookActionPerformed
+        Date Idate = (Date) date_in.getValue();
+        Date Odate = (Date) date_out.getValue();
+        
+        if (Odate.before(Idate)) {
+            JOptionPane.showMessageDialog(this, "Check-out date cannot be before Check-in date.", "Date Error", JOptionPane.ERROR_MESSAGE);
+            return; 
+        }
+            date_in.setValue(Idate);
+            date_out.setValue(Odate);
+        
+        
+
+        TransferBookSpinner.InDate = (Date) date_in.getValue();
+        TransferBookSpinner.OutDate = (Date) date_out.getValue();
+        TransferBookSpinner.adults = (Integer) spin_adult.getValue();
+        TransferBookSpinner.children = (Integer) spin_child.getValue();
+        
         booking n=new booking();
         n.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+       
+    }//GEN-LAST:event_btn_bookActionPerformed
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
         home_page n=new home_page();
@@ -269,7 +290,9 @@ public class loggedin_home_page extends javax.swing.JFrame  {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btn_book;
+    private javax.swing.JSpinner date_in;
+    private javax.swing.JSpinner date_out;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
@@ -285,10 +308,8 @@ public class loggedin_home_page extends javax.swing.JFrame  {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
-    private javax.swing.JSpinner jSpinner4;
+    private javax.swing.JSpinner spin_adult;
+    private javax.swing.JSpinner spin_child;
     // End of variables declaration//GEN-END:variables
 
     
