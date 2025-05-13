@@ -3,34 +3,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package hotel_booking;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 /**
  *
- * @author rieje
+ * @author my pc
  */
-public class booking_details_page extends javax.swing.JFrame{
+public class adminhistory extends javax.swing.JFrame {
     Connection con= javaconnect.connectdb();
     PreparedStatement ps = null;
     ResultSet rs=null;
     DefaultTableModel tbmodel = new DefaultTableModel();
     /**
-     * Creates new form booking_details_page
+     * Creates new form adminhistory
      */
-    public booking_details_page() {
+    public adminhistory() {
         initComponents();
         javaconnect.connectdb();
         Select();
     }
     private void Select() {
-    String sql = "SELECT name, contact, email, gender, checkin, checkout, pax, roomnum, roomtype, price, username FROM BOOKINGS";
-    String[] columnNames = {"NAME", "CONTACT", "EMAIL", "GENDER", "CHECKIN", "CHECKOUT", "PAX", "ROOMNUM", "ROOMTYPE", "PRICE", "USERNAME"};
+    String sql = "SELECT name, contact, email, gender, checkin, checkout, pax, roomnum, roomtype, price, status, username FROM BOOKHISTORY";
+    String[] columnNames = {"NAME", "CONTACT", "EMAIL", "GENDER", "CHECKIN", "CHECKOUT", "PAX", "ROOMNUM", "ROOMTYPE", "PRICE", "STATUS", "USERNAME"};
     tbmodel.setColumnIdentifiers(columnNames);
     tbmodel.setRowCount(0);
 
@@ -54,9 +52,10 @@ public class booking_details_page extends javax.swing.JFrame{
             String roomNum = rs.getString("ROOMNUM");
             String roomType = rs.getString("ROOMTYPE");
             String price = rs.getString("PRICE");
+            String status = rs.getString("STATUS");
             String username = rs.getString("USERNAME");
 
-            tbmodel.addRow(new Object[]{name, contact, email, gender, checkin, checkout, pax, roomNum, roomType, price, username});
+            tbmodel.addRow(new Object[]{name, contact, email, gender, checkin, checkout, pax, roomNum, roomType, price, status, username});
             x++;
         }
 
@@ -75,6 +74,7 @@ public class booking_details_page extends javax.swing.JFrame{
         try { if (conn != null) conn.close(); } catch (SQLException e) {}
     }
 }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,9 +84,8 @@ public class booking_details_page extends javax.swing.JFrame{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<>();
-        btn_decline1 = new javax.swing.JButton();
-        btn_decline = new javax.swing.JButton();
+        cb_stat = new javax.swing.JComboBox<>();
+        cb_stat1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -99,7 +98,6 @@ public class booking_details_page extends javax.swing.JFrame{
         btn_accept = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         bdetailtb = new javax.swing.JTable();
-        cb_stat = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -112,36 +110,19 @@ public class booking_details_page extends javax.swing.JFrame{
         btn_accept1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         bdetailtb1 = new javax.swing.JTable();
-        cb_stat1 = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         roomnum = new javax.swing.JTextField();
         username = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cb_stat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Status", "Accepted", "Declined" }));
 
-        btn_decline1.setBackground(new java.awt.Color(255, 204, 153));
-        btn_decline1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn_decline1.setText("Decline");
-        btn_decline1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_decline1ActionPerformed(evt);
-            }
-        });
-
-        btn_decline.setBackground(new java.awt.Color(255, 204, 204));
-        btn_decline.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn_decline.setText("Delete");
-        btn_decline.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_declineActionPerformed(evt);
-            }
-        });
+        cb_stat1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Status", "Accepted", "Declined" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1120, 600));
         setMinimumSize(new java.awt.Dimension(1120, 600));
-        setResizable(false);
+        setPreferredSize(new java.awt.Dimension(1120, 600));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -236,9 +217,9 @@ public class booking_details_page extends javax.swing.JFrame{
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 600));
 
-        btn_accept.setBackground(new java.awt.Color(204, 255, 204));
+        btn_accept.setBackground(new java.awt.Color(255, 153, 153));
         btn_accept.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn_accept.setText("Push");
+        btn_accept.setText("Delete");
         btn_accept.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_acceptActionPerformed(evt);
@@ -247,17 +228,9 @@ public class booking_details_page extends javax.swing.JFrame{
         jPanel1.add(btn_accept, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 140, -1, -1));
 
         bdetailtb.setModel(tbmodel);
-        bdetailtb.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                bdetailtbMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(bdetailtb);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 810, 400));
-
-        cb_stat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Status", "Accepted", "Declined" }));
-        jPanel1.add(cb_stat, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 140, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -367,9 +340,6 @@ public class booking_details_page extends javax.swing.JFrame{
 
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 810, 400));
 
-        cb_stat1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Status", "Accepted", "Declined" }));
-        jPanel3.add(cb_stat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 140, -1, -1));
-
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("Room Number:");
         jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, -1, -1));
@@ -402,131 +372,11 @@ public class booking_details_page extends javax.swing.JFrame{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_declineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_declineActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_declineActionPerformed
-
-    private void btn_decline1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_decline1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_decline1ActionPerformed
-
-    private void roomnumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomnumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_roomnumActionPerformed
-
-    private void btn_accept1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_accept1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_accept1ActionPerformed
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel8MouseClicked
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void bdetailtbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bdetailtbMouseClicked
-        int row = bdetailtb.getSelectedRow();
-        if (row >= 0) {
-            DefaultTableModel model = (DefaultTableModel) bdetailtb.getModel();
-            String roomNumber = model.getValueAt(row, 7).toString();
-            String userName = model.getValueAt(row, 10).toString();
-
-            username.setText(userName);
-            roomnum.setText(roomNumber);
-        }
-
-    }//GEN-LAST:event_bdetailtbMouseClicked
-
-    private void btn_acceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_acceptActionPerformed
-        int confirm = JOptionPane.showConfirmDialog(null, "Do you want to push this item?", "Warning", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            String roomNumber = roomnum.getText().trim();
-            String userName = username.getText().trim();
-            String status = (String) cb_stat.getSelectedItem();
-            
-            if (roomNumber.isEmpty() || userName.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Room number and username are required.");
-                return;
-            }
-            
-            if (status == null || status.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please select a status.");
-                return;
-            }
-            
-            // First: insert into BOOKHISTORY
-            String sqla = "INSERT INTO BOOKHISTORY (" +
-                    "name, contact, email, gender, checkin, checkout, pax, roomnum, roomtype, price, username, status" +
-                    ") " +
-                    "SELECT name, contact, email, gender, checkin, checkout, pax, roomnum, roomtype, price, username, ? " +
-                    "FROM BOOKINGS WHERE username = ? AND roomnum = ?";
-            
-            try (PreparedStatement pst = con.prepareStatement(sqla)) {
-                pst.setString(1, status);
-                pst.setString(2, userName);
-                pst.setString(3, roomNumber);
-                
-                int rows = pst.executeUpdate();
-                if (rows > 0) {
-                    // Then delete from BOOKINGS
-                    String sql = "DELETE FROM BOOKINGS WHERE username = ? AND roomnum = ?";
-                    try (PreparedStatement ps = con.prepareStatement(sql)) {
-                        ps.setString(1, userName);
-                        ps.setString(2, roomNumber);
-                        int deleted = ps.executeUpdate();
-                        
-                        if (deleted > 0) {
-                            roomnum.setText("");
-                            username.setText("");
-                            Select(); // refresh table
-                            JOptionPane.showMessageDialog(null, "Record pushed to history.");
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Failed to delete original record after insertion.");
-                        }
-                    } catch (SQLException deleteErr) {
-                        JOptionPane.showMessageDialog(null, "Delete Error: " + deleteErr.getMessage());
-                        deleteErr.printStackTrace();
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "No matching record found in bookings to push.");
-                }
-            } catch (SQLException insertErr) {
-                JOptionPane.showMessageDialog(null, "Insert Error: " + insertErr.getMessage());
-                insertErr.printStackTrace();
-            }
-        }
-
-
-
-    }//GEN-LAST:event_btn_acceptActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        admin_home n=new admin_home();
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        booking_details_page n=new booking_details_page();
         n.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jLabel2MouseClicked
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         room_management_page1 n=new room_management_page1();
@@ -534,11 +384,81 @@ public class booking_details_page extends javax.swing.JFrame{
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        booking_details_page n=new booking_details_page();
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        admin_home n=new admin_home();
         n.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void btn_acceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_acceptActionPerformed
+        try {
+            int confirm = JOptionPane.showConfirmDialog(null, "Do you want to delete this record?", "Warning", JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                String roomNumber = roomnum.getText().trim();
+                String userName = username.getText().trim();
+
+                if (roomNumber.isEmpty() || userName.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Room number and username are required to delete the record.");
+                    return;
+                }
+
+                String sql = "DELETE FROM BOOKHISTORY WHERE USERNAME = ? AND ROOMNUM = ?";
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setString(1, userName);
+                ps.setString(2, roomNumber);
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    roomnum.setText("");
+                    username.setText("");
+                    Select(); // Assuming this reloads your table
+                    JOptionPane.showMessageDialog(adminhistory.this, "Record Deleted!");
+                } else {
+                    JOptionPane.showMessageDialog(adminhistory.this, "No record found with the given Username and Room Number.");
+                }
+            }
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(adminhistory.this, "Database error: " + err.getMessage());
+        }
+
+    }//GEN-LAST:event_btn_acceptActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void btn_accept1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_accept1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_accept1ActionPerformed
+
+    private void roomnumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomnumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_roomnumActionPerformed
 
     /**
      * @param args the command line arguments
@@ -557,20 +477,20 @@ public class booking_details_page extends javax.swing.JFrame{
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(booking_details_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminhistory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(booking_details_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminhistory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(booking_details_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminhistory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(booking_details_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminhistory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new booking_details_page().setVisible(true);
+                new adminhistory().setVisible(true);
             }
         });
     }
@@ -580,8 +500,6 @@ public class booking_details_page extends javax.swing.JFrame{
     private javax.swing.JTable bdetailtb1;
     private javax.swing.JButton btn_accept;
     private javax.swing.JButton btn_accept1;
-    private javax.swing.JButton btn_decline;
-    private javax.swing.JButton btn_decline1;
     private javax.swing.JComboBox<String> cb_stat;
     private javax.swing.JComboBox<String> cb_stat1;
     private javax.swing.JButton jButton1;
@@ -592,7 +510,6 @@ public class booking_details_page extends javax.swing.JFrame{
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;

@@ -16,7 +16,17 @@ public class stay_page extends javax.swing.JFrame {
     public stay_page() {
         initComponents();
     }
+    private void openCustomerHome() {
+    home_page hPage = new home_page();
+    hPage.setVisible(true);
+    this.setVisible(false);
+    }
 
+    private void openLoginPage() {
+        loggedin_home_page lhPage = new loggedin_home_page();
+        lhPage.setVisible(true);
+        this.setVisible(false);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,10 +172,11 @@ public class stay_page extends javax.swing.JFrame {
         jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel17.setText("Number of Rooms Available");
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 160, -1, -1));
+        jLabel17.setText("Number of Rooms:");
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 160, -1, -1));
 
         txt_single.setEditable(false);
+        txt_single.setText("8");
         txt_single.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_singleActionPerformed(evt);
@@ -197,10 +208,11 @@ public class stay_page extends javax.swing.JFrame {
         jPanel3.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, -1, -1));
 
         jLabel31.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel31.setText("Number of Rooms Available");
-        jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 170, -1, -1));
+        jLabel31.setText("Number of Rooms:");
+        jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 170, -1, -1));
 
         txt_double.setEditable(false);
+        txt_double.setText("6");
         txt_double.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_doubleActionPerformed(evt);
@@ -352,9 +364,14 @@ public class stay_page extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel14MouseClicked
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-        home_page n=new home_page();
-        n.setVisible(true);
-        this.setVisible(false);
+ 
+    if (Current.loggedInUsername != null && !Current.loggedInUsername.isEmpty()) {
+        openCustomerHome();
+    } else {
+        openLoginPage();
+    }            
+            
+        
     }//GEN-LAST:event_jLabel12MouseClicked
 
     private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
