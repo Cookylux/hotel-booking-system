@@ -13,9 +13,14 @@ import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.Locale;
 import javax.swing.SpinnerNumberModel;
+import java.time.temporal.ChronoUnit;
 /**
  *
  * @author rieje
@@ -29,84 +34,63 @@ public class booking extends javax.swing.JFrame {
      * Creates new form user_booking_details_page
      */
     public booking() {
-        this.username = username;
+        
         initComponents();
-        javaconnect.connectdb();
-        loadcustomerdata();
-        name.setText(BookingData.name);
-        contact.setText(BookingData.contact);
-        email.setText(BookingData.email);
+        con = javaconnect.connectdb(); 
+
+        loadcustomerdata(username);
+
         cb_gender.setSelectedItem(BookingData.gender);
         check_in.setText(BookingData.checkIn);
         check_out.setText(BookingData.checkOut);
-        cb_roomtype.setSelectedItem(BookingData.roomType);
+        cb_roomnum.setSelectedItem(BookingData.roomType);
         price.setText(BookingData.price);
-        
-        spin_roomnum.setModel(new SpinnerNumberModel(1, 1, 10, 1));
-        
-        
-        try {
-            int rooms = Integer.parseInt(BookingData.numRooms);
-            SpinnerNumberModel model = (SpinnerNumberModel) spin_roomnum.getModel();
-            int min = (Integer) model.getMinimum();
-            int max = (Integer) model.getMaximum();
 
-            
-            if (rooms >= min && rooms <= max) {
-                spin_roomnum.setValue(rooms);
-            } else {
-                spin_roomnum.setValue(min);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            spin_roomnum.setValue(1);
-        }
-        
         SimpleDateFormat reg = new SimpleDateFormat("MM-dd-yyyy");
-        try{
-            String EMAIL = "someone@example.com";
-            String selectSql = "SELECT FIRSTNAME FROM SIGNUP WHERE EMAIL = ?";
-            PreparedStatement selectStmt = con.prepareStatement(selectSql);
-            selectStmt.setString(1, EMAIL);
-            ResultSet rs = selectStmt.executeQuery();
-
-            if (rs.next()) {
-                String fetchedUsername = rs.getString("FIRSTNAME");
-                name.setText(fetchedUsername);            
-}
+        try {
             check_in.setText(reg.format(TransferBookSpinner.InDate));
             check_out.setText(reg.format(TransferBookSpinner.OutDate));
-            spin_adult.setValue(TransferBookSpinner.adults);
-            spin_child.setValue(TransferBookSpinner.children);
-            email.setText(TransferBookSpinner.Email);
-            name.setText(TransferBookSpinner.firstname + " " + TransferBookSpinner.lastname);
-            
+            spin_pax.setValue(TransferBookSpinner.adults + TransferBookSpinner.children);
         } catch (Exception e) {
             e.printStackTrace();
         }
-     
-        spin_roomnum.addChangeListener(e -> updatePrice());
     }
-     private void loadcustomerdata() {
+    private void loadcustomerdata(String username) {
         try {
-            String sql = "SELECT firstname, lastname, email, contactnum FROM SIGNUP WHERE username = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
-            
-            if (rs.next()) {
-                String fullName = rs.getString("firstname") + " " + rs.getString("lastname");
-                name.setText(fullName);
-                email.setText(rs.getString("email"));
-                contact.setText(rs.getString("contactnum"));
+        String sql = "SELECT firstname, lastname, email, contactnum FROM SIGNUP WHERE username = ?";
+        PreparedStatement ps = con.prepareStatement(sql); 
+        ps.setString(1, Current.loggedInUsername); 
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            String firstName = rs.getString("firstname");
+            String lastName = rs.getString("lastname");
+            String emailValue = rs.getString("email");
+
+
+            if (firstName == null) firstName = "";
+            if (lastName == null) lastName = "";
+
+            name.setText((firstName + " " + lastName).trim());
+
+            if (emailValue != null) {
+                email.setText(emailValue);
+            } else {
+                email.setText("No email");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+            contact.setText(rs.getString("contactnum"));
+        } else {
+            System.out.println("No user found with username: " + Current.loggedInUsername);
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    }
+
     private void updatePrice() {
         try {
-            int pricePerRoom = switch ((String) cb_roomtype.getSelectedItem()) {
+        int pricePerRoom = switch ((String) cb_roomtype.getSelectedItem()) {
             case "Single Room" -> 2999;
             case "Double Room" -> 9599;
             case "Triple Room" -> 15600;
@@ -114,16 +98,83 @@ public class booking extends javax.swing.JFrame {
             default -> 0;
         };
 
-        int roomCount = (Integer) spin_roomnum.getValue();
-        int total = roomCount * pricePerRoom;
         NumberFormat php = NumberFormat.getCurrencyInstance(new Locale("en", "PH"));
-        String formatted = php.format(total).replaceAll("\\.00$", "");
+        String formatted = php.format(pricePerRoom).replaceAll("\\.00$", "");
         price.setText(formatted);
-        
-    } catch (Exception e) {  
-        price.setText("₱0.00");
+
+    } catch (Exception e) {
+        price.setText("₱0");
     }  
     }
+    private void loadAvailableRoomsByType(String roomType) {
+    try {
+        String checkInText = check_in.getText().trim();
+        String checkOutText = check_out.getText().trim();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+
+        long nights = 1;// default
+        LocalDate checkInDate = null;
+        LocalDate checkOutDate = null;
+
+        if (!checkInText.isEmpty() && !checkOutText.isEmpty()) {
+            try {
+                checkInDate = LocalDate.parse(checkInText, formatter);
+                checkOutDate = LocalDate.parse(checkOutText, formatter);
+
+                if (!checkOutDate.isBefore(checkInDate)) {
+                    nights = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+                }
+            } catch (DateTimeParseException e) {
+
+                nights = 1;
+            }
+        }
+
+        cb_roomnum.removeAllItems();
+        price.setText(null);
+
+
+        String query = "SELECT ROOMNUM, PRICE FROM ROOMMANAGEMENT1 " +
+               "WHERE ROOMTYPE = ? AND STATUS = 'Available' " +
+               "AND ROOMNUM NOT IN ( " +
+               "SELECT ROOMNUM FROM UNAVAILROOMS " +
+               "WHERE UNAVAILDATES BETWEEN ? AND ?)";
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, roomType);
+    stmt.setDate(2, checkInDate != null ? java.sql.Date.valueOf(checkInDate) : java.sql.Date.valueOf(LocalDate.now()));
+    stmt.setDate(3, checkOutDate != null ? java.sql.Date.valueOf(checkOutDate.minusDays(1)) : java.sql.Date.valueOf(LocalDate.now()));
+
+        ResultSet rs = stmt.executeQuery();
+
+        NumberFormat php = NumberFormat.getCurrencyInstance(new Locale("en", "PH"));
+        boolean first = true;
+
+        while (rs.next()) {
+            cb_roomnum.addItem(rs.getString("ROOMNUM"));
+
+            if (first) {
+                try {
+                    double pricePerNight = Double.parseDouble(rs.getString("PRICE"));
+                    double totalPrice = pricePerNight * nights;
+
+                    String priceInfo = "₱" + (int) pricePerNight + " x " + nights + " night(s) = " +
+                            php.format(totalPrice).replaceAll("\\.00$", "");
+                    price.setText(priceInfo);
+                } catch (NumberFormatException e) {
+                    price.setText("₱0");
+                }
+                first = false;
+            }
+        }
+
+        rs.close();
+        stmt.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -133,6 +184,9 @@ public class booking extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        spin_child = new javax.swing.JSpinner();
+        jLabel7 = new javax.swing.JLabel();
+        spin_roomnum = new javax.swing.JSpinner();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -147,19 +201,20 @@ public class booking extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         email = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        cb_roomtype = new javax.swing.JComboBox<>();
+        cb_roomnum = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         check_in = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         check_out = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        spin_adult = new javax.swing.JSpinner();
-        jLabel7 = new javax.swing.JLabel();
-        spin_child = new javax.swing.JSpinner();
+        spin_pax = new javax.swing.JSpinner();
         cb_gender = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        spin_roomnum = new javax.swing.JSpinner();
+        cb_roomtype = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 1, 15)); // NOI18N
+        jLabel7.setText("Children:");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1060, 597));
@@ -189,7 +244,7 @@ public class booking extends javax.swing.JFrame {
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 340, -1, -1));
 
         price.setEditable(false);
-        jPanel2.add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 360, 120, 30));
+        jPanel2.add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 360, 290, 30));
 
         name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,9 +288,14 @@ public class booking extends javax.swing.JFrame {
         jLabel17.setText("Gender:");
         jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
 
-        cb_roomtype.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cb_roomtype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Room Type", "Single Room", "Double Room", "Triple Room", "Quad  Room", " " }));
-        jPanel2.add(cb_roomtype, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 240, 290, 30));
+        cb_roomnum.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cb_roomnum.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", " " }));
+        cb_roomnum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_roomnumActionPerformed(evt);
+            }
+        });
+        jPanel2.add(cb_roomnum, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 300, 170, 30));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 15)); // NOI18N
         jLabel4.setText("Check-in:");
@@ -260,23 +320,26 @@ public class booking extends javax.swing.JFrame {
         jPanel2.add(check_out, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 120, 290, 30));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 15)); // NOI18N
-        jLabel6.setText("Adult:");
+        jLabel6.setText("Pax");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 160, -1, -1));
-        jPanel2.add(spin_adult, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 180, 100, 30));
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 1, 15)); // NOI18N
-        jLabel7.setText("Children:");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 160, -1, -1));
-        jPanel2.add(spin_child, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 100, 30));
+        jPanel2.add(spin_pax, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 180, 100, 30));
 
         cb_gender.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cb_gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Gender", "Male", "Female", " " }));
+        cb_gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female", "" }));
         jPanel2.add(cb_gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 290, 30));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 1, 15)); // NOI18N
-        jLabel8.setText("Number of Rooms:");
+        jLabel8.setText("Available Rooms:");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 280, -1, -1));
-        jPanel2.add(spin_roomnum, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 300, 100, 30));
+
+        cb_roomtype.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cb_roomtype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Room Type", "Single Room", "Double Room", "Triple Room", "Quad Room", " " }));
+        cb_roomtype.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_roomtypeActionPerformed(evt);
+            }
+        });
+        jPanel2.add(cb_roomtype, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 240, 290, 30));
 
         jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 880, 480));
 
@@ -302,85 +365,114 @@ public class booking extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel14MouseClicked
 
     private void proceedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proceedActionPerformed
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
-            sdf.setLenient(false);
-        
-            Date cin = sdf.parse(check_in.getText().trim());
-            Date cout = sdf.parse(check_out.getText().trim());
-            if (cout.before(cin)) {
-                JOptionPane.showMessageDialog(this, "Check-out date cannot be before Check-in date.", "Date Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }             
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(this, 
-                    "Please enter dates in MM-dd-yyyy format.", 
-                    "Invalid Date Format", JOptionPane.ERROR_MESSAGE);
-        }
-        
-       
-        if (name.getText().trim().isEmpty() ||
-        contact.getText().trim().isEmpty() ||
-        email.getText().trim().isEmpty() ||
-        check_in.getText().trim().isEmpty() ||
-        check_out.getText().trim().isEmpty() ||
-        spin_adult.getValue() == null ||
-        spin_child.getValue() == null ||
-        cb_roomtype.getSelectedItem() == null ||
-        spin_roomnum.getValue() == null ||
-        cb_gender.getSelectedItem() == null) {
-        
-        JOptionPane.showMessageDialog(this, "Please fill out all fields before proceeding.", "Missing Information", JOptionPane.WARNING_MESSAGE);
-        return;
-        }
-        
-        int adults = (Integer) spin_adult.getValue();
-        int children = (Integer) spin_child.getValue();
-        int totalPeople = adults + children;
-        int rooms = (Integer) spin_roomnum.getValue();
-        String roomType = cb_roomtype.getSelectedItem().toString();
-        
-        int peoplePerRoom = switch (roomType) {
-        case "Single Room" -> 2; 
-        case "Double Room" -> 4;
-        case "Triple Room" -> 4; 
-        case "Quad Room"   -> 6;
-        default -> 1;
-        };
-        
-        int maxPeople = rooms * peoplePerRoom;
+    java.sql.Date checkin = null;
+    java.sql.Date checkout = null;
 
-        if (totalPeople > maxPeople) {
-        JOptionPane.showMessageDialog(this,
-        "Total people exceed the capacity for the selected room(s).\n" +
-        "Selected room type: " + roomType + "\n" +
-        "Max capacity with " + rooms + " room(s): " + maxPeople + "\n" +
-        "You entered: " + totalPeople + " people\n\n" +
-        "Please select more rooms or a different room type.",
-        "Room Capacity Exceeded", JOptionPane.WARNING_MESSAGE);
-        return;
+    try {
+        // Parse dates
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+        LocalDate checkInDate = LocalDate.parse(check_in.getText().trim(), formatter);
+        LocalDate checkOutDate = LocalDate.parse(check_out.getText().trim(), formatter);
+
+        checkin = java.sql.Date.valueOf(checkInDate);
+        checkout = java.sql.Date.valueOf(checkOutDate);
+
+    if (checkOutDate.isBefore(checkInDate)) {
+    JOptionPane.showMessageDialog(this, "Check-out date cannot be before Check-in date.", "Date Error", JOptionPane.ERROR_MESSAGE);
+    return;
+    }
+        checkin = java.sql.Date.valueOf(checkInDate);
+        checkout = java.sql.Date.valueOf(checkOutDate);
+
+        if (checkOutDate.isBefore(checkInDate)) {
+            JOptionPane.showMessageDialog(this, "Check-out date cannot be before Check-in date.", "Date Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-     
-        
-        BookingData.name = name.getText();
-        BookingData.contact = contact.getText();
-        BookingData.email = email.getText();
-        BookingData.gender = cb_gender.getSelectedItem().toString();
-        BookingData.checkIn = check_in.getText();
-        BookingData.checkOut = check_out.getText();
-        BookingData.adult = spin_adult.getValue().toString();
-        BookingData.children = spin_child.getValue().toString(); 
-        BookingData.roomType = cb_roomtype.getSelectedItem().toString();
-        BookingData.numRooms = spin_roomnum.getValue().toString();
-        BookingData.roomNo = "N/A";
-        BookingData.price = price.getText();
-        
-        Object[] rowData = {
-            BookingData.name, BookingData.contact, BookingData.email,
-            BookingData.gender, BookingData.checkIn, BookingData.checkOut,
-            BookingData.adult, BookingData.children, BookingData.roomType,
-            BookingData.numRooms, BookingData.roomNo, BookingData.price
+
+        if (name.getText().trim().isEmpty() || contact.getText().trim().isEmpty() || email.getText().trim().isEmpty() ||
+            cb_gender.getSelectedItem() == null || cb_roomtype.getSelectedItem() == null || cb_roomnum.getSelectedItem() == null ||
+            spin_pax.getValue() == null) {
+
+            JOptionPane.showMessageDialog(this, "Please fill out all fields before proceeding.", "Missing Info", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+ 
+        int pax = Integer.parseInt(spin_pax.getValue().toString());
+        String roomType = cb_roomtype.getSelectedItem().toString();
+
+        int peoplePerRoom = switch (roomType) {
+            case "Single Room" -> 2;
+            case "Double Room" -> 4;
+            case "Triple Room" -> 4;
+            case "Quad Room" -> 6;
+            default -> 1;
         };
+
+        if (pax > peoplePerRoom) {
+            JOptionPane.showMessageDialog(this,
+                "Total people exceed the capacity for the selected room(s).\n" +
+                "Room type: " + roomType + "\n" +
+                "Total capacity: " + peoplePerRoom + "\n" +
+                "People: " + pax,
+                "Room Capacity Exceeded", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String priceText = price.getText();
+        double totalPrice = 0.0;
+
+        try {
+            String[] parts = priceText.split("=");
+            if (parts.length == 2) {
+                String totalPart = parts[1].replaceAll("[^\\d.]", "");
+                totalPrice = Double.parseDouble(totalPart);
+            }
+        } catch (Exception e) {
+            totalPrice = 0.0;
+        }
+
+        String insertSQL = "INSERT INTO GROUP4.BOOKINGS (name, contact, email, gender, checkin, checkout, pax, roomnum, roomtype, price, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement insertPs = con.prepareStatement(insertSQL);
+        insertPs.setString(1, name.getText().trim());
+        insertPs.setString(2, contact.getText().trim());
+        insertPs.setString(3, email.getText().trim());
+        insertPs.setString(4, cb_gender.getSelectedItem().toString().trim());
+        insertPs.setDate(5, checkin);
+        insertPs.setDate(6, checkout);
+        insertPs.setString(7, spin_pax.getValue().toString().trim());
+        insertPs.setString(8, cb_roomnum.getSelectedItem().toString().trim());
+        insertPs.setString(9, cb_roomtype.getSelectedItem().toString().trim());
+        insertPs.setString(10, String.valueOf(totalPrice));
+        insertPs.setString(11, Current.loggedInUsername);
+        
+        insertPs.executeUpdate();
+        insertPs.close();
+        
+        String roomNum = cb_roomnum.getSelectedItem().toString();
+
+        String unavailableSQL = "INSERT INTO UNAVAILROOMS (ROOMNUM, UNAVAILDATES) VALUES (?, ?)";
+        PreparedStatement unavailablePs = con.prepareStatement(unavailableSQL);
+
+        for (LocalDate date = checkInDate; date.isBefore(checkOutDate); date = date.plusDays(1)) {
+            unavailablePs.setString(1, roomNum);
+            unavailablePs.setDate(2, java.sql.Date.valueOf(date));
+            unavailablePs.addBatch();  // More efficient
+        }
+
+        unavailablePs.executeBatch();
+        unavailablePs.close();
+        con.close();
+
+        JOptionPane.showMessageDialog(this, "Booking Successful");
+        new loggedin_home_page().setVisible(true);
+        this.setVisible(false);
+
+    } catch (DateTimeParseException e) {
+        JOptionPane.showMessageDialog(this, "Invalid date format. Use MM-DD-YYYY", "Date Error", JOptionPane.ERROR_MESSAGE);
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Something went wrong while booking.", "Error", JOptionPane.ERROR_MESSAGE);
+    }    
     }//GEN-LAST:event_proceedActionPerformed
 
     private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
@@ -402,6 +494,21 @@ public class booking extends javax.swing.JFrame {
     private void check_outActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_check_outActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_check_outActionPerformed
+
+    private void cb_roomnumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_roomnumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_roomnumActionPerformed
+
+    private void cb_roomtypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_roomtypeActionPerformed
+        
+    String selectedType = (String) cb_roomtype.getSelectedItem();
+
+    if (selectedType != null && !selectedType.equals("Select")) {
+        loadAvailableRoomsByType(selectedType);
+    }
+
+
+    }//GEN-LAST:event_cb_roomtypeActionPerformed
     
     /**
      * @param args the command line arguments
@@ -447,6 +554,7 @@ public class booking extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cb_gender;
+    private javax.swing.JComboBox<String> cb_roomnum;
     private javax.swing.JComboBox<String> cb_roomtype;
     private javax.swing.JTextField check_in;
     private javax.swing.JTextField check_out;
@@ -470,8 +578,8 @@ public class booking extends javax.swing.JFrame {
     private javax.swing.JTextField name;
     private javax.swing.JTextField price;
     private javax.swing.JButton proceed;
-    private javax.swing.JSpinner spin_adult;
     private javax.swing.JSpinner spin_child;
+    private javax.swing.JSpinner spin_pax;
     private javax.swing.JSpinner spin_roomnum;
     // End of variables declaration//GEN-END:variables
 

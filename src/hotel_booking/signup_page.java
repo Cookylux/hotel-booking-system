@@ -266,7 +266,7 @@ public class signup_page extends javax.swing.JFrame {
             if (txt_fn.getText().trim().isEmpty() || txt_ln.getText().trim().isEmpty() ||
                 txt_userN.getText().trim().isEmpty() || txt_email.getText().trim().isEmpty() ||
                 txt_bday.getText().trim().isEmpty() || txt_cn.getText().trim().isEmpty() ||
-                txt_pass.getText().trim().isEmpty() || txt_cpass.getText().trim().isEmpty()) {
+                txt_pass.getText().trim().isEmpty() || txt_cpass.getText().trim().isEmpty() ) {
 
                 JOptionPane.showMessageDialog(this, "Please fill in all required fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -337,18 +337,14 @@ public class signup_page extends javax.swing.JFrame {
                 insertPs.setString(2, txt_ln.getText().trim());
                 insertPs.setString(3, txt_userN.getText().trim());
                 insertPs.setString(4, txt_email.getText().trim());
+                insertPs.setString(6, txt_cn.getText().trim());
                 insertPs.setDate(5, bday);
-                
                 insertPs.setString(7, pass);
 
                 int insertedRows = insertPs.executeUpdate();
                 if (insertedRows > 0) {
                     JOptionPane.showMessageDialog(this, "Sign Up Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    
-                    TransferBookSpinner.Email = (String) txt_email.getText();
-                    TransferBookSpinner.lastname = (String) txt_ln.getText();
-                    TransferBookSpinner.firstname = (String) txt_fn.getText();
-                    
+                    Current.loggedInUsername = txt_userN.getText().trim();
                     booking loginhp = new booking();
                     loginhp.setVisible(true);
                     this.setVisible(false);

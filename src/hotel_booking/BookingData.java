@@ -15,10 +15,9 @@ public class BookingData {
     public static String gender;
     public static String checkIn;
     public static String checkOut;
-    public static String adult;
-    public static String children;
+    public static String pax;
     public static String roomType;
-    public static String numRooms;
+    public static String roomNum;
     public static String roomNo = "N/A";
     public static String price;  
 }

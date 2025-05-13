@@ -213,18 +213,31 @@ public class loggedin_home_page extends javax.swing.JFrame  {
     private void btn_bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_bookActionPerformed
         Date Idate = (Date) date_in.getValue();
         Date Odate = (Date) date_out.getValue();
-        
+        Date today = new Date(); // Get today's date
+
+        // Check if check-in is in the past
+        if (Idate.before(today)) {
+            JOptionPane.showMessageDialog(this, "Check-in date cannot be in the past.", "Date Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Check if check-out is before check-in
         if (Odate.before(Idate)) {
             JOptionPane.showMessageDialog(this, "Check-out date cannot be before Check-in date.", "Date Error", JOptionPane.ERROR_MESSAGE);
-            return; 
+            return;
         }
-            date_in.setValue(Idate);
-            date_out.setValue(Odate);
-        
-        
 
-        TransferBookSpinner.InDate = (Date) date_in.getValue();
-        TransferBookSpinner.OutDate = (Date) date_out.getValue();
+        // Set values to spinner (optional unless you're modifying them)
+        date_in.setValue(Idate);
+        date_out.setValue(Odate);
+
+        // Convert to java.sql.Date if needed
+        java.sql.Date checkin = new java.sql.Date(Idate.getTime());
+        java.sql.Date checkout = new java.sql.Date(Odate.getTime());
+
+        // Store in transfer class or wherever needed
+        TransferBookSpinner.InDate = Idate;
+        TransferBookSpinner.OutDate = Odate;
         TransferBookSpinner.adults = (Integer) spin_adult.getValue();
         TransferBookSpinner.children = (Integer) spin_child.getValue();
         

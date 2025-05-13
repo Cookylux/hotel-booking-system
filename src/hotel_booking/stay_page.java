@@ -40,7 +40,7 @@ public class stay_page extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txt_single = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
@@ -48,7 +48,7 @@ public class stay_page extends javax.swing.JFrame {
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txt_double = new javax.swing.JTextField();
         jLabel59 = new javax.swing.JLabel();
         jLabel60 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -59,7 +59,7 @@ public class stay_page extends javax.swing.JFrame {
         jLabel42 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txt_triple = new javax.swing.JTextField();
         jLabel58 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel45 = new javax.swing.JLabel();
@@ -69,7 +69,7 @@ public class stay_page extends javax.swing.JFrame {
         jLabel55 = new javax.swing.JLabel();
         jLabel56 = new javax.swing.JLabel();
         jLabel57 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txt_quad = new javax.swing.JTextField();
         jLabel61 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -165,13 +165,13 @@ public class stay_page extends javax.swing.JFrame {
         jLabel17.setText("Number of Rooms Available");
         jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 160, -1, -1));
 
-        jTextField1.setEditable(false);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txt_single.setEditable(false);
+        txt_single.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txt_singleActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 160, 80, -1));
+        jPanel2.add(txt_single, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 160, 80, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Double Room", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18), new java.awt.Color(179, 139, 84))); // NOI18N
@@ -200,13 +200,13 @@ public class stay_page extends javax.swing.JFrame {
         jLabel31.setText("Number of Rooms Available");
         jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 170, -1, -1));
 
-        jTextField2.setEditable(false);
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txt_double.setEditable(false);
+        txt_double.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txt_doubleActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 170, 80, -1));
+        jPanel3.add(txt_double, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 170, 80, -1));
 
         jLabel59.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel59.setText("A single room is designed for one occupant and has one bed – generally a double or queen bed.");
@@ -247,13 +247,13 @@ public class stay_page extends javax.swing.JFrame {
         jLabel44.setText("Number of Rooms Available");
         jPanel4.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 170, -1, -1));
 
-        jTextField3.setEditable(false);
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txt_triple.setEditable(false);
+        txt_triple.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                txt_tripleActionPerformed(evt);
             }
         });
-        jPanel4.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 170, 80, -1));
+        jPanel4.add(txt_triple, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 170, 80, -1));
 
         jLabel58.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel58.setText("As the name suggests, the triple is a room that can accommodate three people");
@@ -290,13 +290,13 @@ public class stay_page extends javax.swing.JFrame {
         jLabel57.setText("Number of Rooms Available");
         jPanel6.add(jLabel57, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 170, -1, -1));
 
-        jTextField4.setEditable(false);
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        txt_quad.setEditable(false);
+        txt_quad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                txt_quadActionPerformed(evt);
             }
         });
-        jPanel6.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 170, 80, -1));
+        jPanel6.add(txt_quad, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 170, 80, -1));
 
         jLabel61.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel61.setText("A larger room that’s meant for four guests, and will have at least two double beds.");
@@ -361,21 +361,21 @@ public class stay_page extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel16MouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txt_singleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_singleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txt_singleActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txt_doubleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_doubleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txt_doubleActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txt_tripleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tripleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txt_tripleActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void txt_quadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_quadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txt_quadActionPerformed
 
     /**
      * @param args the command line arguments
@@ -454,9 +454,9 @@ public class stay_page extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField txt_double;
+    private javax.swing.JTextField txt_quad;
+    private javax.swing.JTextField txt_single;
+    private javax.swing.JTextField txt_triple;
     // End of variables declaration//GEN-END:variables
 }

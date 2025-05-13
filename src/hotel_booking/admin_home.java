@@ -184,7 +184,7 @@ public class admin_home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        room_management_page n=new room_management_page();
+        booking n=new booking();
         n.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed

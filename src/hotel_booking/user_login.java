@@ -256,7 +256,7 @@ public class user_login extends javax.swing.JFrame{
 
                 if (rs.next()) {
                     JOptionPane.showMessageDialog(null, "Login Successfully");
-
+                    Current.loggedInUsername = userN.getText().trim();
                     if ("Admin".equalsIgnoreCase(selectedUserType)) {
                         admin_home adminPage = new admin_home();
                         adminPage.setVisible(true);

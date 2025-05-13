@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package hotel_booking;
 import hotel_booking.javaconnect;
 import java.sql.*;
@@ -7,34 +11,31 @@ import javax.swing.JOptionPane;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import javax.swing.table.DefaultTableModel;
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
 /**
  *
- * @author rieje
+ * @author my pc
  */
-public class room_management_page extends javax.swing.JFrame{
+public class room_management_page1 extends javax.swing.JFrame {
     Connection con= javaconnect.connectdb();
     PreparedStatement ps = null;
     ResultSet rs=null;
     DefaultTableModel tbModel = new DefaultTableModel();
+    
     /**
-     * Creates new form room_management_page
+     * Creates new form room_management_page1
      */
-    public room_management_page() {
+    public room_management_page1() {
         initComponents();
         javaconnect.connectdb();
         Select();
+        txt_room_num.setEnabled(false);
     }
-        public void Select() {
-            String[] columnNames = {"ROOMNUMBER", "ROOMTYPE", "BED", "PRICE", "STATUS"};
+    private void Select() {
+            String[] columnNames = {"ROOMNUM", "ROOMTYPE", "BED", "PRICE", "STATUS"};
             tbModel.setColumnIdentifiers(columnNames);
             tbModel.setRowCount(0);  // Clear table before repopulating
 
-            String sql = "SELECT ROOMNUMBER, ROOMTYPE, BED, PRICE, STATUS FROM rooms";
+            String sql = "SELECT ROOMNUM, ROOMTYPE, BED, PRICE, STATUS FROM ROOMMANAGEMENT1";
 
             try {
                 ps = con.prepareStatement(sql);
@@ -42,10 +43,10 @@ public class room_management_page extends javax.swing.JFrame{
                 int x = 0;
 
                 while (rs.next()) {
-                    String rm = rs.getString("ROOMNUMBER");
+                    String rm = rs.getString("ROOMNUM");
                     String rtyp = rs.getString("ROOMTYPE");
                     String bed = rs.getString("BED");
-                    int price = rs.getInt("PRICE");
+                    String price = rs.getString("PRICE");
                     String stats = rs.getString("STATUS");
 
                     tbModel.addRow(new Object[] {rm, rtyp, bed, price, stats});
@@ -65,7 +66,6 @@ public class room_management_page extends javax.swing.JFrame{
                 try { if (ps != null) ps.close(); } catch (SQLException e) {}
             }
         }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -76,7 +76,6 @@ public class room_management_page extends javax.swing.JFrame{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -105,11 +104,7 @@ public class room_management_page extends javax.swing.JFrame{
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1060, 597));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1080, 593));
@@ -150,6 +145,12 @@ public class room_management_page extends javax.swing.JFrame{
             }
         });
         jPanel1.add(bt_delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(829, 538, -1, -1));
+
+        txt_room_num.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_room_numActionPerformed(evt);
+            }
+        });
         jPanel1.add(txt_room_num, new org.netbeans.lib.awtextra.AbsoluteConstraints(797, 332, 137, 31));
         jPanel1.add(txt_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(351, 501, 111, 31));
 
@@ -294,17 +295,7 @@ public class room_management_page extends javax.swing.JFrame{
 
         jPanel1.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 631));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Room No.", "Room Type", "Bed", "Price", "Status"
-            }
-        ));
+        jTable1.setModel(tbModel);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -332,35 +323,56 @@ public class room_management_page extends javax.swing.JFrame{
         try {
             String roomNumber;
 
-            // Handle manual room number input
-            if (checkbox_addrn.isSelected()) {
-                roomNumber = txt_room_num.getText().trim();
+                if (checkbox_addrn.isSelected()) {
+                    roomNumber = txt_room_num.getText().trim();
 
-                // Validate format
-                if (!roomNumber.startsWith("R") || roomNumber.length() < 2) {
-                    JOptionPane.showMessageDialog(null, "Invalid room format! Must start with 'R'.");
-                    return;
-                }
-
-                try {
-                    int number = Integer.parseInt(roomNumber.substring(1));
-                    if (number < 1 || number > 30) {
-                        JOptionPane.showMessageDialog(null, "Room number must be between R01 and R30.");
+                    if (!roomNumber.startsWith("R") || roomNumber.length() < 2) {
+                        JOptionPane.showMessageDialog(null, "Invalid room format! Must start with 'R'.");
                         return;
                     }
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Invalid number format in room code!");
-                    return;
-                }
 
-            } else {
-                // If using selected combo box value
-                if (cb_roomnum.getSelectedItem() == null) {
-                    JOptionPane.showMessageDialog(null, "Please select a room number.");
-                    return;
+                    try {
+                        int number = Integer.parseInt(roomNumber.substring(1));
+                        if (number < 21 || number > 30) {
+                            JOptionPane.showMessageDialog(null, "Room number must be between R21 and R30.");
+                            return;
+                        }
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null, "Invalid number format in room code!");
+                        return;
+                    }
+
+                    // 🔎 Check if room already exists
+                    String checkSql = "SELECT COUNT(*) FROM ROOMMANAGEMENT1 WHERE ROOMNUM = ?";
+                    PreparedStatement checkStmt = con.prepareStatement(checkSql);
+                    checkStmt.setString(1, roomNumber);
+                    ResultSet rs = checkStmt.executeQuery();
+                    if (rs.next()) {
+                        int count = rs.getInt(1);
+                        if (count > 0) {
+                            JOptionPane.showMessageDialog(null, "Room number already exists!");
+                            return;
+                        }
+                    }
+
+                } else {
+                    if (cb_roomnum.getSelectedItem() == null) {
+                        JOptionPane.showMessageDialog(null, "Please select a room number.");
+                        return;
+                    }
+                    roomNumber = cb_roomnum.getSelectedItem().toString();
+                    String checkSql = "SELECT COUNT(*) FROM ROOMMANAGEMENT1 WHERE ROOMNUM = ?";
+                    PreparedStatement checkStmt = con.prepareStatement(checkSql);
+                    checkStmt.setString(1, roomNumber);
+                    ResultSet rs = checkStmt.executeQuery();
+                    if (rs.next()) {
+                        int count = rs.getInt(1);
+                        if (count > 0) {
+                            JOptionPane.showMessageDialog(null, "Room number already exists!");
+                            return;
+                        }
+                    }
                 }
-                roomNumber = cb_roomnum.getSelectedItem().toString();
-            }
 
             // Validate and parse price
             int price;
@@ -381,14 +393,14 @@ public class room_management_page extends javax.swing.JFrame{
             String bed = txt_bed.getText().trim();
             String status = cb_status.getSelectedItem().toString();
 
-            // Defensive check
+            
             if (bed.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Bed field cannot be empty.");
                 return;
             }
 
-            // SQL Insert
-            String sql = "INSERT INTO rooms (ROOMNUMBER, ROOMTYPE, BED, PRICE, STATUS) VALUES (?, ?, ?, ?, ?)";
+             
+            String sql = "INSERT INTO ROOMMANAGEMENT1 (ROOMNUM, ROOMTYPE, BED, PRICE, STATUS) VALUES (?, ?, ?, ?, ?)";
             ps = con.prepareStatement(sql);
             ps.setString(1, roomNumber);
             ps.setString(2, roomType);
@@ -403,32 +415,53 @@ public class room_management_page extends javax.swing.JFrame{
                 JOptionPane.showMessageDialog(null, "Record Added");
 
         } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(room_management_page.class.getName())
+            java.util.logging.Logger.getLogger(room_management_page1.class.getName())
                 .log(java.util.logging.Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
         }
     }//GEN-LAST:event_bt_addActionPerformed
 
     private void bt_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_deleteActionPerformed
-        try{
+        try {
             int confirm = JOptionPane.showConfirmDialog(null, "Do you want to delete the item?", "Warning", JOptionPane.YES_NO_OPTION);
 
-            if (confirm==JOptionPane.YES_OPTION){
-                rs.deleteRow();
-                Refresh_RS_STMT();
+            if (confirm == JOptionPane.YES_OPTION) {
+                String roomNumber;
+                if (checkbox_addrn.isSelected()) {
+                    roomNumber = txt_room_num.getText().trim();
+                } else {
+                    roomNumber = cb_roomnum.getSelectedItem().toString();
+                    }
+                    
+                if (roomNumber.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Room number is required to delete the record.");
+                    return;
+                }
 
-                txt_room_num.setText("");
-                cb_roomtype.setSelectedItem(0);
-                txt_bed.setText("");
-                txt_price.setText("");
-                cb_status.setSelectedItem(0);
-                Select();
-                JOptionPane.showMessageDialog(room_management_page.this, "Record Deleted!");
+                String sql = "DELETE FROM ROOMMANAGEMENT1 WHERE ROOMNUM = ?";
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setString(1, roomNumber);
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    // Clear UI fields
+                    txt_room_num.setText("");
+                    cb_roomtype.setSelectedIndex(0);
+                    txt_bed.setText("");
+                    txt_price.setText("");
+                    cb_status.setSelectedIndex(0);
+
+                    // Refresh data
+                    Select();
+                    JOptionPane.showMessageDialog(room_management_page1.this, "Record Deleted!");
+                } else {
+                    JOptionPane.showMessageDialog(room_management_page1.this, "No record found with the given Room Number.");
+                }
             }
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(room_management_page1.this, "Database error: " + err.getMessage());
         }
-        catch (SQLException err){
-            JOptionPane.showMessageDialog(room_management_page.this, err.getMessage());
-        }
+
     }//GEN-LAST:event_bt_deleteActionPerformed
 
     private void cb_roomtypeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cb_roomtypeMouseClicked
@@ -459,27 +492,63 @@ public class room_management_page extends javax.swing.JFrame{
     }//GEN-LAST:event_cb_statusActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
-        try{
-            rs.updateString("ROOMNUMBER", txt_room_num.getText());
-            rs.updateString("ROOMNUMBER", cb_roomnum.getSelectedItem().toString());
-            int pr = Integer.parseInt(txt_price.getText());
-            rs.updateString("ROOMTYPE", cb_roomtype.getSelectedItem().toString());
-            rs.updateString("BED", txt_bed.getText());
-            rs.updateInt("PRICE", pr );
-            rs.updateString("STATUS", cb_status.getSelectedItem().toString());
+        try {
+            String roomNumber;
+                if (checkbox_addrn.isSelected()) {
+                    roomNumber = txt_room_num.getText().trim();
+                } else {
+                    roomNumber = cb_roomnum.getSelectedItem().toString();
+                    }
+            String roomType = cb_roomtype.getSelectedItem().toString();
+            String bed = txt_bed.getText().trim();
+            String status = cb_status.getSelectedItem().toString();
 
-            rs.updateRow();
-            JOptionPane.showMessageDialog(room_management_page.this, "Record Updated!");
-            Refresh_RS_STMT();
-            Select();
+            int price;
+            try {
+                price = Integer.parseInt(txt_price.getText().trim());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Invalid price format.");
+                return;
+            }
+
+            if (roomNumber.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Room number is required for update.");
+                return;
+            }
+
+            String sql = "UPDATE ROOMMANAGEMENT1 SET ROOMTYPE = ?, BED = ?, PRICE = ?, STATUS = ? WHERE ROOMNUM = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, roomType);
+            ps.setString(2, bed);
+            ps.setInt(3, price);
+            ps.setString(4, status);
+            ps.setString(5, roomNumber);  
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(room_management_page1.this, "Record Updated!");
+                Select();
+            } else {
+                JOptionPane.showMessageDialog(room_management_page1.this, "No record found with the given Room Number.");
+            }
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(room_management_page1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(room_management_page1.this, "Database error: " + ex.getMessage());
         }
-        catch (SQLException ex){
-            java.util.logging.Logger.getLogger(room_management_page.class.getName()).log(java.util.logging.Level.SEVERE, null,ex);
-        }
+
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void checkbox_addrnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkbox_addrnActionPerformed
-        cb_roomnum.setEnabled(false);
+        if (checkbox_addrn.isSelected()) {
+            cb_roomnum.setEnabled(false);
+            txt_room_num.setEnabled(true);
+        } else {
+            cb_roomnum.setEnabled(true);
+            txt_room_num.setEnabled(false);
+        }
+            
     }//GEN-LAST:event_checkbox_addrnActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
@@ -489,7 +558,7 @@ public class room_management_page extends javax.swing.JFrame{
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        room_management_page n=new room_management_page();
+        room_management_page1 n=new room_management_page1();
         n.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton18ActionPerformed
@@ -511,8 +580,45 @@ public class room_management_page extends javax.swing.JFrame{
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // TODO add your handling code here:
+        
+        int row = jTable1.getSelectedRow(); 
+        if (row >= 0) {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+            // Retrieve each cell's value by column index
+            String roomNumber = model.getValueAt(row, 0).toString();
+            String roomType = model.getValueAt(row, 1).toString();
+            String bed = model.getValueAt(row, 2).toString();
+            String price = model.getValueAt(row, 3).toString();
+            String status = model.getValueAt(row, 4).toString();
+
+            if (roomNumber.startsWith("R")) {
+                try {
+                    int number = Integer.parseInt(roomNumber.substring(1));
+                    if (number < 21) {
+                        cb_roomnum.setSelectedItem(roomNumber);
+                        cb_roomnum.setEnabled(true);
+                        txt_room_num.setEnabled(false);
+                    } else {
+                        txt_room_num.setText(roomNumber);
+                        cb_roomnum.setEnabled(false);
+                        txt_room_num.setEnabled(true);
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Invalid room number format: " + roomNumber);
+                }
+            }
+            
+            cb_roomtype.setSelectedItem(roomType);
+            txt_bed.setText(bed);
+            txt_price.setText(price);
+            cb_status.setSelectedItem(status);
+        }
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void txt_room_numActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_room_numActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_room_numActionPerformed
 
     /**
      * @param args the command line arguments
@@ -531,20 +637,20 @@ public class room_management_page extends javax.swing.JFrame{
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(room_management_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(room_management_page1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(room_management_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(room_management_page1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(room_management_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(room_management_page1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(room_management_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(room_management_page1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new room_management_page().setVisible(true);
+                new room_management_page1().setVisible(true);
             }
         });
     }
@@ -561,7 +667,6 @@ public class room_management_page extends javax.swing.JFrame{
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton20;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;

@@ -4,19 +4,77 @@
  */
 package hotel_booking;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author rieje
  */
 public class booking_details_page extends javax.swing.JFrame{
-
+    Connection con= javaconnect.connectdb();
+    PreparedStatement ps = null;
+    ResultSet rs=null;
+    DefaultTableModel tbmodel = new DefaultTableModel();
     /**
      * Creates new form booking_details_page
      */
     public booking_details_page() {
         initComponents();
+        javaconnect.connectdb();
+        Select();
     }
+    private void Select() {
+    String sql = "SELECT name, contact, email, gender, checkin, checkout, pax, roomnum, roomtype, price, username FROM BOOKINGS";
+    String[] columnNames = {"NAME", "CONTACT", "EMAIL", "GENDER", "CHECKIN", "CHECKOUT", "PAX", "ROOMNUM", "ROOMTYPE", "PRICE", "USERNAME"};
+    tbmodel.setColumnIdentifiers(columnNames);
+    tbmodel.setRowCount(0);
 
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+        ps = con.prepareStatement(sql);
+        rs = ps.executeQuery();
+
+        int x = 0;
+        while (rs.next()) {
+            String name = rs.getString("NAME");
+            String contact = rs.getString("CONTACT");
+            String email = rs.getString("EMAIL");
+            String gender = rs.getString("GENDER");
+            String checkin = rs.getString("CHECKIN");
+            String checkout = rs.getString("CHECKOUT");
+            String pax = rs.getString("PAX");
+            String roomNum = rs.getString("ROOMNUM");
+            String roomType = rs.getString("ROOMTYPE");
+            String price = rs.getString("PRICE");
+            String username = rs.getString("USERNAME");
+
+            tbmodel.addRow(new Object[]{name, contact, email, gender, checkin, checkout, pax, roomNum, roomType, price, username});
+            x++;
+        }
+
+        bdetailtb.setModel(tbmodel);
+        bdetailtb.setVisible(x > 0);
+
+        if (x == 0) {
+            JOptionPane.showMessageDialog(this, "No records found.");
+        }
+
+    } catch (SQLException err) {
+        JOptionPane.showMessageDialog(this, "Error retrieving data: " + err.getMessage());
+    } finally {
+        try { if (rs != null) rs.close(); } catch (SQLException e) {}
+        try { if (ps != null) ps.close(); } catch (SQLException e) {}
+        try { if (conn != null) conn.close(); } catch (SQLException e) {}
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,12 +100,12 @@ public class booking_details_page extends javax.swing.JFrame{
         btn_accept = new javax.swing.JButton();
         btn_decline = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        bdetailtb = new javax.swing.JTable();
+        btn_decline1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1060, 600));
-        setMinimumSize(new java.awt.Dimension(1060, 600));
-        setPreferredSize(new java.awt.Dimension(1060, 600));
+        setMaximumSize(new java.awt.Dimension(1120, 600));
+        setMinimumSize(new java.awt.Dimension(1120, 600));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -142,7 +200,7 @@ public class booking_details_page extends javax.swing.JFrame{
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(96, 96, 96)
                         .addComponent(jButton5)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,51 +215,51 @@ public class booking_details_page extends javax.swing.JFrame{
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(jButton5)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 600));
 
         btn_accept.setBackground(new java.awt.Color(204, 255, 204));
         btn_accept.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn_accept.setText("Accept");
+        btn_accept.setText("Check out");
         btn_accept.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_acceptActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_accept, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 140, -1, -1));
+        jPanel1.add(btn_accept, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 140, -1, -1));
 
         btn_decline.setBackground(new java.awt.Color(255, 204, 204));
         btn_decline.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn_decline.setText("Decline");
+        btn_decline.setText("Delete");
         btn_decline.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_declineActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_decline, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 140, -1, -1));
+        jPanel1.add(btn_decline, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 140, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Username", "Contact No.", "Email", "Gender", "Check-in", "Check-out", "Adult", "Children", "Room Type", "Room No.", "Price"
+        bdetailtb.setModel(tbmodel);
+        jScrollPane1.setViewportView(bdetailtb);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 810, 400));
+
+        btn_decline1.setBackground(new java.awt.Color(255, 204, 204));
+        btn_decline1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn_decline1.setText("Decline");
+        btn_decline1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_decline1ActionPerformed(evt);
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 840, 400));
+        });
+        jPanel1.add(btn_decline1, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 140, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1120, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,7 +280,7 @@ public class booking_details_page extends javax.swing.JFrame{
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        room_management_page n=new room_management_page();
+        room_management_page1 n=new room_management_page1();
         n.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -248,6 +306,10 @@ public class booking_details_page extends javax.swing.JFrame{
     private void btn_declineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_declineActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_declineActionPerformed
+
+    private void btn_decline1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_decline1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_decline1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -285,10 +347,12 @@ public class booking_details_page extends javax.swing.JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable bdetailtb;
     private javax.swing.JButton btn_accept;
     private javax.swing.JButton btn_clear;
     private javax.swing.JButton btn_confirm;
     private javax.swing.JButton btn_decline;
+    private javax.swing.JButton btn_decline1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
@@ -300,7 +364,6 @@ public class booking_details_page extends javax.swing.JFrame{
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField txt_search;
     // End of variables declaration//GEN-END:variables
 }

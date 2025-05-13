@@ -13,17 +13,17 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author rieje
+ * @author my pc
  */
-public class my_booking_page extends javax.swing.JFrame {
+public class history extends javax.swing.JFrame {
     Connection con= javaconnect.connectdb();
     PreparedStatement ps = null;
     ResultSet rs=null;
     DefaultTableModel tbModel = new DefaultTableModel();
     /**
-     * Creates new form my_booking_page
+     * Creates new form history
      */
-    public my_booking_page() {
+    public history() {
         initComponents();
         user.setText(Current.loggedInUsername);
         javaconnect.connectdb();
@@ -31,8 +31,8 @@ public class my_booking_page extends javax.swing.JFrame {
     }
     private void Select() {
         
-    String sql = "SELECT name, contact, email, gender, checkin, checkout, pax, roomnum, roomtype, price FROM BOOKINGS WHERE username = ?";   
-    String[] columnNames = {"NAME", "CONTACT", "EMAIL", "GENDER", "CHECKIN", "CHECKOUT", "PAX", "ROOMNUM", "ROOMTYPE", "PRICE"};
+    String sql = "SELECT name, contact, email, gender, checkin, checkout, pax, roomnum, roomtype, price, status FROM BOOKHISTORY WHERE username = ?";   
+    String[] columnNames = {"NAME", "CONTACT", "EMAIL", "GENDER", "CHECKIN", "CHECKOUT", "PAX", "ROOMNUM", "ROOMTYPE", "PRICE", "STATUS"};
     tbModel.setColumnIdentifiers(columnNames);
     tbModel.setRowCount(0);  // Clear table before repopulating
 
@@ -53,13 +53,14 @@ public class my_booking_page extends javax.swing.JFrame {
                 String roomNum = rs.getString("ROOMNUM");
                 String roomType = rs.getString("ROOMTYPE");
                 String price = rs.getString("PRICE");
+                String status = rs.getString("STATUS");
 
-                tbModel.addRow(new Object[] {name, contact, email, gender, checkin, checkout, pax, roomNum, roomType, price});
+                tbModel.addRow(new Object[] {name, contact, email, gender, checkin, checkout, pax, roomNum, roomType, price, status});
                 x++;
             }
 
-            mybookingtb.setModel(tbModel);
-            mybookingtb.setVisible(x > 0);
+            historytb.setModel(tbModel);
+            historytb.setVisible(x > 0);
 
             if (x == 0) {
                 JOptionPane.showMessageDialog(this, "No records found.");
@@ -71,9 +72,7 @@ public class my_booking_page extends javax.swing.JFrame {
             try { if (rs != null) rs.close(); } catch (SQLException e) {}
             try { if (ps != null) ps.close(); } catch (SQLException e) {}
         }
-    }   
-        
-
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,7 +83,7 @@ public class my_booking_page extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
@@ -93,15 +92,24 @@ public class my_booking_page extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jScrollPane3 = new javax.swing.JScrollPane();
-        mybookingtb = new javax.swing.JTable();
+        historytb = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         user = new javax.swing.JLabel();
 
-        jLabel2.setText("jLabel2");
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1060, 597));
-        setResizable(false);
+        setMaximumSize(new java.awt.Dimension(1060, 600));
+        setMinimumSize(new java.awt.Dimension(1060, 600));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -133,7 +141,7 @@ public class my_booking_page extends javax.swing.JFrame {
         jLabel17.setBackground(new java.awt.Color(255, 255, 255));
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("Booking History");
+        jLabel17.setText("My Booking");
         jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel17MouseClicked(evt);
@@ -176,8 +184,8 @@ public class my_booking_page extends javax.swing.JFrame {
         jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane4.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        mybookingtb.setModel(tbModel);
-        jScrollPane3.setViewportView(mybookingtb);
+        historytb.setModel(tbModel);
+        jScrollPane3.setViewportView(historytb);
 
         jScrollPane4.setViewportView(jScrollPane3);
 
@@ -197,7 +205,7 @@ public class my_booking_page extends javax.swing.JFrame {
                 .addContainerGap())
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(29, 29, 29)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(user)
@@ -207,11 +215,11 @@ public class my_booking_page extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(user))
-                .addGap(39, 39, 39)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -243,9 +251,9 @@ public class my_booking_page extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel16MouseClicked
 
     private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
-        history his = new history();
-        his.setVisible(true);
-        this.setVisible(false);
+       my_booking_page mbp = new my_booking_page();
+       mbp.setVisible(true);
+       this.setVisible(false);
     }//GEN-LAST:event_jLabel17MouseClicked
 
     /**
@@ -265,36 +273,36 @@ public class my_booking_page extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(my_booking_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(history.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(my_booking_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(history.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(my_booking_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(history.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(my_booking_page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(history.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new my_booking_page().setVisible(true);
+                new history().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable historytb;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable mybookingtb;
     private javax.swing.JLabel user;
     // End of variables declaration//GEN-END:variables
 }

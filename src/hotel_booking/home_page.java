@@ -4,6 +4,12 @@
  */
 package hotel_booking;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author rieje
@@ -32,12 +38,12 @@ public class home_page extends javax.swing.JFrame{
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jSpinner3 = new javax.swing.JSpinner();
+        spin_ad = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
-        jSpinner4 = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
+        spin_ch = new javax.swing.JSpinner();
+        bt_book = new javax.swing.JButton();
+        spin_in = new javax.swing.JSpinner();
+        spin_out = new javax.swing.JSpinner();
         jPanel5 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -80,22 +86,22 @@ public class home_page extends javax.swing.JFrame{
 
         jLabel5.setText("Adult:");
 
-        jSpinner3.setModel(new javax.swing.SpinnerNumberModel(0, 0, 10, 1));
+        spin_ad.setModel(new javax.swing.SpinnerNumberModel(0, 0, 10, 1));
 
         jLabel6.setText("Children:");
 
-        jSpinner4.setModel(new javax.swing.SpinnerNumberModel(0, 0, 10, 1));
+        spin_ch.setModel(new javax.swing.SpinnerNumberModel(0, 0, 10, 1));
 
-        jButton1.setText("Book now");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bt_book.setText("Book now");
+        bt_book.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bt_bookActionPerformed(evt);
             }
         });
 
-        jSpinner1.setModel(new javax.swing.SpinnerDateModel());
+        spin_in.setModel(new javax.swing.SpinnerDateModel());
 
-        jSpinner2.setModel(new javax.swing.SpinnerDateModel());
+        spin_out.setModel(new javax.swing.SpinnerDateModel());
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -108,20 +114,20 @@ public class home_page extends javax.swing.JFrame{
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spin_in, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spin_out, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(169, 169, 169)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(spin_ad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(spin_ch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(131, 131, 131)
-                .addComponent(jButton1)
+                .addComponent(bt_book)
                 .addContainerGap(84, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -134,22 +140,22 @@ public class home_page extends javax.swing.JFrame{
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel5)
-                                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(spin_ad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel6)
-                                    .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(spin_ch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel3)
-                                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(spin_in, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel4)
-                                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(spin_out, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(43, 43, 43)
-                        .addComponent(jButton1)))
+                        .addComponent(bt_book)))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -282,11 +288,40 @@ public class home_page extends javax.swing.JFrame{
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel1MouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bt_bookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_bookActionPerformed
+        Date Idate = (Date) spin_in.getValue();
+        Date Odate = (Date) spin_out.getValue();
+        Date today = new Date(); // Get today's date
+
+        // Check if check-in is in the past
+        if (Idate.before(today)) {
+            JOptionPane.showMessageDialog(this, "Check-in date cannot be in the past.", "Date Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Check if check-out is before check-in
+        if (Odate.before(Idate)) {
+            JOptionPane.showMessageDialog(this, "Check-out date cannot be before Check-in date.", "Date Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Set values to spinner (optional unless you're modifying them)
+        spin_in.setValue(Idate);
+        spin_out.setValue(Odate);
+
+        // Convert to java.sql.Date if needed
+        java.sql.Date checkin = new java.sql.Date(Idate.getTime());
+        java.sql.Date checkout = new java.sql.Date(Odate.getTime());
+
+        // Store in transfer class or wherever needed
+        TransferBookSpinner.InDate = Idate;
+        TransferBookSpinner.OutDate = Odate;
+        TransferBookSpinner.adults = (Integer) spin_ad.getValue();
+        TransferBookSpinner.children = (Integer) spin_ch.getValue();
         user_login n=new user_login();
         n.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_bt_bookActionPerformed
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
         home_page n=new home_page();
@@ -349,7 +384,7 @@ public class home_page extends javax.swing.JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton bt_book;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -367,10 +402,10 @@ public class home_page extends javax.swing.JFrame{
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
-    private javax.swing.JSpinner jSpinner4;
+    private javax.swing.JSpinner spin_ad;
+    private javax.swing.JSpinner spin_ch;
+    private javax.swing.JSpinner spin_in;
+    private javax.swing.JSpinner spin_out;
     // End of variables declaration//GEN-END:variables
 
     

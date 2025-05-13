@@ -82,24 +82,24 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jSpinner1" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
-                      <Component id="jSpinner2" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
+                      <Component id="spin_in" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
+                      <Component id="spin_out" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="169" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jSpinner3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spin_ad" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jSpinner4" min="-2" max="-2" attributes="0"/>
+                          <Component id="spin_ch" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Component id="bt_book" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="84" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -114,30 +114,30 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jSpinner3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="spin_ad" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jSpinner4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="spin_ch" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jSpinner1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="spin_in" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jSpinner2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="spin_out" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <Component id="bt_book" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="30" max="32767" attributes="0"/>
@@ -161,7 +161,7 @@
             <Property name="text" type="java.lang.String" value="Adult:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="jSpinner3">
+        <Component class="javax.swing.JSpinner" name="spin_ad">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" maximum="10" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
@@ -173,29 +173,29 @@
             <Property name="text" type="java.lang.String" value="Children:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="jSpinner4">
+        <Component class="javax.swing.JSpinner" name="spin_ch">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" maximum="10" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="bt_book">
           <Properties>
             <Property name="text" type="java.lang.String" value="Book now"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_bookActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JSpinner" name="jSpinner1">
+        <Component class="javax.swing.JSpinner" name="spin_in">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="now" stepSize="5" type="date"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="jSpinner2">
+        <Component class="javax.swing.JSpinner" name="spin_out">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="now" stepSize="5" type="date"/>
