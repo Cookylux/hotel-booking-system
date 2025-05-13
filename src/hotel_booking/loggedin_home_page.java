@@ -249,7 +249,7 @@ public class loggedin_home_page extends javax.swing.JFrame  {
     }//GEN-LAST:event_btn_bookActionPerformed
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-        home_page n=new home_page();
+        loggedin_home_page n=new loggedin_home_page();
         n.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jLabel12MouseClicked

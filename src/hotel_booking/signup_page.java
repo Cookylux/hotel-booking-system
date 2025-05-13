@@ -345,9 +345,19 @@ public class signup_page extends javax.swing.JFrame {
                 if (insertedRows > 0) {
                     JOptionPane.showMessageDialog(this, "Sign Up Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
                     Current.loggedInUsername = txt_userN.getText().trim();
-                    booking loginhp = new booking();
-                    loginhp.setVisible(true);
-                    this.setVisible(false);
+                    String check_in = BookingData.checkIn;
+                    String check_out = BookingData.checkOut;
+
+                    if (check_in == null || check_in.trim().isEmpty()) {
+                        booking book = new booking();
+                        book.setVisible(true);
+                        this.setVisible(false);
+                    } else {
+                        loggedin_home_page loginhp = new loggedin_home_page();
+                        loginhp.setVisible(true);
+                        this.setVisible(false);
+                    }
+
                 } else {
                     JOptionPane.showMessageDialog(this, "Error during sign-up.", "Error", JOptionPane.ERROR_MESSAGE);
                 }

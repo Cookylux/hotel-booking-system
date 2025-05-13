@@ -582,11 +582,13 @@ public class room_management_page1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel12MouseClicked
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-        // TODO add your handling code here:
+        user_login n=new user_login();
+        n.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        status_report_page n=new status_report_page();
+        sales_report n=new sales_report();
         n.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton20ActionPerformed

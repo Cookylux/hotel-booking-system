@@ -366,9 +366,9 @@ public class stay_page extends javax.swing.JFrame {
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
  
     if (Current.loggedInUsername != null && !Current.loggedInUsername.isEmpty()) {
-        openCustomerHome();
-    } else {
         openLoginPage();
+    } else {
+        openCustomerHome();
     }            
             
         
