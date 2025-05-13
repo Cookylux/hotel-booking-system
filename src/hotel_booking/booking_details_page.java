@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -457,29 +458,29 @@ public class booking_details_page extends javax.swing.JFrame{
             String roomNumber = roomnum.getText().trim();
             String userName = username.getText().trim();
             String status = (String) cb_stat.getSelectedItem();
-            
+
             if (roomNumber.isEmpty() || userName.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Room number and username are required.");
                 return;
             }
-            
+
             if (status == null || status.trim().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Please select a status.");
                 return;
             }
-            
-            // First: insert into BOOKHISTORY
+
+            // Insert into BOOKHISTORY
             String sqla = "INSERT INTO BOOKHISTORY (" +
                     "name, contact, email, gender, checkin, checkout, pax, roomnum, roomtype, price, username, status" +
                     ") " +
                     "SELECT name, contact, email, gender, checkin, checkout, pax, roomnum, roomtype, price, username, ? " +
                     "FROM BOOKINGS WHERE username = ? AND roomnum = ?";
-            
+
             try (PreparedStatement pst = con.prepareStatement(sqla)) {
                 pst.setString(1, status);
                 pst.setString(2, userName);
                 pst.setString(3, roomNumber);
-                
+
                 int rows = pst.executeUpdate();
                 if (rows > 0) {
                     // Then delete from BOOKINGS
@@ -488,12 +489,36 @@ public class booking_details_page extends javax.swing.JFrame{
                         ps.setString(1, userName);
                         ps.setString(2, roomNumber);
                         int deleted = ps.executeUpdate();
-                        
+
                         if (deleted > 0) {
+                            // 🆕 Delete unavailable room dates
+                            String dateQuery = "SELECT checkin, checkout FROM BOOKHISTORY WHERE username = ? AND roomnum = ?";
+                            try (PreparedStatement dateStmt = con.prepareStatement(dateQuery)) {
+                                dateStmt.setString(1, userName);
+                                dateStmt.setString(2, roomNumber);
+                                ResultSet rs = dateStmt.executeQuery();
+
+                                if (rs.next()) {
+                                    LocalDate checkInDate = rs.getDate("checkin").toLocalDate();
+                                    LocalDate checkOutDate = rs.getDate("checkout").toLocalDate();
+
+                                    String deleteSQL = "DELETE FROM UNAVAILROOMS WHERE ROOMNUM = ? AND UNAVAILDATES = ?";
+                                    try (PreparedStatement deletePs = con.prepareStatement(deleteSQL)) {
+                                        for (LocalDate date = checkInDate; date.isBefore(checkOutDate); date = date.plusDays(1)) {
+                                            deletePs.setString(1, roomNumber);
+                                            deletePs.setDate(2, java.sql.Date.valueOf(date));
+                                            deletePs.addBatch();
+                                        }
+                                        deletePs.executeBatch();
+                                    }
+                                }
+                            }
+
                             roomnum.setText("");
                             username.setText("");
                             Select(); // refresh table
                             JOptionPane.showMessageDialog(null, "Record pushed to history.");
+
                         } else {
                             JOptionPane.showMessageDialog(null, "Failed to delete original record after insertion.");
                         }
@@ -509,6 +534,7 @@ public class booking_details_page extends javax.swing.JFrame{
                 insertErr.printStackTrace();
             }
         }
+
 
 
 
