@@ -46,7 +46,7 @@ public class signup_page extends javax.swing.JFrame {
         jLabel37 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
         txt_userN = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
+        confirm = new javax.swing.JButton();
         txt_fn = new javax.swing.JTextField();
         jLabel44 = new javax.swing.JLabel();
         txt_email = new javax.swing.JTextField();
@@ -169,13 +169,13 @@ public class signup_page extends javax.swing.JFrame {
         jPanel7.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, 25));
         jPanel7.add(txt_userN, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 350, -1));
 
-        jButton6.setText("Confirm");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        confirm.setText("Confirm");
+        confirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                confirmActionPerformed(evt);
             }
         });
-        jPanel7.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 376, -1, -1));
+        jPanel7.add(confirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 376, -1, -1));
 
         txt_fn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,7 +257,7 @@ public class signup_page extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_fnActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
        if (con != null) {
             if (txt_fn.getText().trim().isEmpty() || txt_ln.getText().trim().isEmpty() ||
                 txt_userN.getText().trim().isEmpty() || txt_email.getText().trim().isEmpty() ||
@@ -375,7 +375,7 @@ public class signup_page extends javax.swing.JFrame {
 
             
 
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_confirmActionPerformed
 
     private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
         // TODO add your handling code here:
@@ -434,7 +434,7 @@ public class signup_page extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox cb_agree;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton confirm;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;

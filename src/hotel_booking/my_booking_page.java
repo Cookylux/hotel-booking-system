@@ -34,7 +34,7 @@ public class my_booking_page extends javax.swing.JFrame {
     String sql = "SELECT name, contact, email, gender, checkin, checkout, pax, roomnum, roomtype, price FROM BOOKINGS WHERE username = ?";   
     String[] columnNames = {"NAME", "CONTACT", "EMAIL", "GENDER", "CHECKIN", "CHECKOUT", "PAX", "ROOMNUM", "ROOMTYPE", "PRICE"};
     tbModel.setColumnIdentifiers(columnNames);
-    tbModel.setRowCount(0);  // Clear table before repopulating
+    tbModel.setRowCount(0);
 
         try {
             ps = con.prepareStatement(sql);

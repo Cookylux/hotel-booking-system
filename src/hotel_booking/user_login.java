@@ -253,7 +253,6 @@ public class user_login extends javax.swing.JFrame{
                 ps.setString(2, pass.getText().trim());
 
                 rs = ps.executeQuery();
-
                 if (rs.next()) {
                     JOptionPane.showMessageDialog(null, "Login Successfully");
                     Current.loggedInUsername = userN.getText().trim();
@@ -261,10 +260,18 @@ public class user_login extends javax.swing.JFrame{
                         admin_home adminPage = new admin_home();
                         adminPage.setVisible(true);
                     } else {
-                        loggedin_home_page customerPage = new loggedin_home_page();
-                        customerPage.setVisible(true);
-                    }
+                        String check_in = BookingData.checkIn;
+                        String check_out = BookingData.checkOut;
 
+                        if (check_in != null && !check_in.trim().isEmpty()) {
+
+                            booking bookpage = new booking();
+                            bookpage.setVisible(true);
+                        } else {
+                            loggedin_home_page customerPage = new loggedin_home_page();
+                            customerPage.setVisible(true);
+                    }
+                    }
                     this.setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Wrong Username or Password!");
