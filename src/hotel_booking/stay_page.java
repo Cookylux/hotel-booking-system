@@ -3,18 +3,64 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package hotel_booking;
-
+import hotel_booking.javaconnect;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.Period;
+import javax.swing.JOptionPane;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author rieje
  */
 public class stay_page extends javax.swing.JFrame {
-
+    Connection con= javaconnect.connectdb();
+    PreparedStatement ps = null;
+    ResultSet rs=null;
     /**
      * Creates new form stay_page
      */
     public stay_page() {
         initComponents();
+        javaconnect.connectdb();
+        numrooms();
+        txt_single.setEnabled(false);
+        txt_double.setEnabled(false);
+        txt_triple.setEnabled(false);
+        txt_quad.setEnabled(false);
+    }
+    private void numrooms(){
+        String[] roomTypes = {"Single Room", "Double Room", "Triple Room", "Quad Room"};
+        JTextField[] outputFields = {
+        txt_single, 
+        txt_double, 
+        txt_triple, 
+        txt_quad
+};
+
+        String sql = "SELECT COUNT(*) FROM roommanagement1 WHERE roomtype = ? AND status = 'Available'";
+
+        try {
+            for (int i = 0; i < roomTypes.length; i++) {
+                try (PreparedStatement ps = con.prepareStatement(sql)) {
+                    ps.setString(1, roomTypes[i]);
+                    ResultSet rs = ps.executeQuery();
+
+                    int count = 0;
+                    if (rs.next()) {
+                        count = rs.getInt(1);
+                    }
+
+                    outputFields[i].setText(String.valueOf(count));
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     private void openCustomerHome() {
     home_page hPage = new home_page();
@@ -51,6 +97,10 @@ public class stay_page extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         txt_single = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
@@ -61,6 +111,10 @@ public class stay_page extends javax.swing.JFrame {
         txt_double = new javax.swing.JTextField();
         jLabel59 = new javax.swing.JLabel();
         jLabel60 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
@@ -71,6 +125,11 @@ public class stay_page extends javax.swing.JFrame {
         jLabel44 = new javax.swing.JLabel();
         txt_triple = new javax.swing.JTextField();
         jLabel58 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel62 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel45 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
@@ -81,6 +140,13 @@ public class stay_page extends javax.swing.JFrame {
         jLabel57 = new javax.swing.JLabel();
         txt_quad = new javax.swing.JTextField();
         jLabel61 = new javax.swing.JLabel();
+        jLabel50 = new javax.swing.JLabel();
+        jLabel49 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel51 = new javax.swing.JLabel();
+        jLabel52 = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1060, 597));
@@ -168,21 +234,32 @@ public class stay_page extends javax.swing.JFrame {
         jLabel11.setText("Per night");
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 50, -1, -1));
 
-        jLabel18.setText("Max Capacity: 1-2 Persons");
-        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, -1, -1));
+        jLabel18.setText("HairDryer");
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel17.setText("Number of Rooms:");
         jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 160, -1, -1));
 
         txt_single.setEditable(false);
-        txt_single.setText("8");
         txt_single.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_singleActionPerformed(evt);
             }
         });
         jPanel2.add(txt_single, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 160, 80, -1));
+
+        jLabel20.setText("Max Capacity: 1-2 Persons");
+        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, -1, -1));
+
+        jLabel22.setText("Tv");
+        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, -1, -1));
+
+        jLabel23.setText("Wi-Fi");
+        jPanel2.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, -1, -1));
+
+        jLabel24.setText("AC(Air Condition)");
+        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Double Room", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18), new java.awt.Color(179, 139, 84))); // NOI18N
@@ -204,7 +281,7 @@ public class stay_page extends javax.swing.JFrame {
         jLabel29.setText("Per night");
         jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 50, -1, -1));
 
-        jLabel30.setText("Max Capacity: 1-2 Persons");
+        jLabel30.setText("Max Capacity: 2-4 Persons");
         jPanel3.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, -1, -1));
 
         jLabel31.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -212,7 +289,6 @@ public class stay_page extends javax.swing.JFrame {
         jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 170, -1, -1));
 
         txt_double.setEditable(false);
-        txt_double.setText("6");
         txt_double.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_doubleActionPerformed(evt);
@@ -227,6 +303,18 @@ public class stay_page extends javax.swing.JFrame {
         jLabel60.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel60.setText("The size of this room is usually larger than a single room.");
         jPanel3.add(jLabel60, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, -1, -1));
+
+        jLabel35.setText("HairDryer");
+        jPanel3.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, -1, -1));
+
+        jLabel25.setText("Tv");
+        jPanel3.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, -1, -1));
+
+        jLabel26.setText("Wi-Fi");
+        jPanel3.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, -1, -1));
+
+        jLabel27.setText("AC(Air Condition)");
+        jPanel3.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, -1, -1));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Triple Room", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18), new java.awt.Color(179, 139, 84))); // NOI18N
@@ -252,7 +340,7 @@ public class stay_page extends javax.swing.JFrame {
         jLabel42.setText("Per night");
         jPanel4.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 50, -1, -1));
 
-        jLabel43.setText("Max Capacity: 1-2 Persons");
+        jLabel43.setText("Max Capacity: 6 Persons");
         jPanel4.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, -1, -1));
 
         jLabel44.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -270,6 +358,21 @@ public class stay_page extends javax.swing.JFrame {
         jLabel58.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel58.setText("As the name suggests, the triple is a room that can accommodate three people");
         jPanel4.add(jLabel58, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, -1, -1));
+
+        jLabel37.setText("Wi-Fi");
+        jPanel4.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, -1, -1));
+
+        jLabel36.setText("Tv");
+        jPanel4.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, -1, -1));
+
+        jLabel39.setText("Snack Bar");
+        jPanel4.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, -1, -1));
+
+        jLabel38.setText("AC(Air Condition)");
+        jPanel4.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, -1, -1));
+
+        jLabel62.setText("HairDryer");
+        jPanel4.add(jLabel62, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, -1, -1));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Quad Room", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18), new java.awt.Color(179, 139, 84))); // NOI18N
@@ -295,7 +398,7 @@ public class stay_page extends javax.swing.JFrame {
         jLabel55.setText("Per night");
         jPanel6.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 50, -1, -1));
 
-        jLabel56.setText("Max Capacity: 1-2 Persons");
+        jLabel56.setText("Max Capacity: 8 Persons");
         jPanel6.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, -1, -1));
 
         jLabel57.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -313,6 +416,27 @@ public class stay_page extends javax.swing.JFrame {
         jLabel61.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel61.setText("A larger room that’s meant for four guests, and will have at least two double beds.");
         jPanel6.add(jLabel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, -1, -1));
+
+        jLabel50.setText("Snack Bar");
+        jPanel6.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, -1, -1));
+
+        jLabel49.setText("AC(Air Condition)");
+        jPanel6.add(jLabel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, -1, -1));
+
+        jLabel48.setText("Wi-Fi");
+        jPanel6.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, -1, -1));
+
+        jLabel40.setText("Tv");
+        jPanel6.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, -1, -1));
+
+        jLabel51.setText("HairDryer");
+        jPanel6.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, -1, -1));
+
+        jLabel52.setText("Kitchen");
+        jPanel6.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 100, -1, -1));
+
+        jLabel53.setText("Game Consoles");
+        jPanel6.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 120, -1, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -340,7 +464,7 @@ public class stay_page extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 39, Short.MAX_VALUE))
+                .addGap(0, 53, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -379,7 +503,7 @@ public class stay_page extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel16MouseClicked
 
     private void txt_singleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_singleActionPerformed
-        // TODO add your handling code here:
+    
     }//GEN-LAST:event_txt_singleActionPerformed
 
     private void txt_doubleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_doubleActionPerformed
@@ -440,7 +564,14 @@ public class stay_page extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
@@ -449,6 +580,12 @@ public class stay_page extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
@@ -456,6 +593,12 @@ public class stay_page extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
@@ -464,6 +607,7 @@ public class stay_page extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
+    private javax.swing.JLabel jLabel62;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

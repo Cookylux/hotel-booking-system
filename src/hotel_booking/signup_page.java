@@ -34,12 +34,12 @@ public class signup_page extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel15 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel36 = new javax.swing.JLabel();
@@ -63,6 +63,16 @@ public class signup_page extends javax.swing.JFrame {
         txt_cpass = new javax.swing.JPasswordField();
         txt_pass = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
+
+        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Sign-up");
+        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel15MouseClicked(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1060, 597));
@@ -98,16 +108,6 @@ public class signup_page extends javax.swing.JFrame {
             }
         });
 
-        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Sign-up");
-        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel15MouseClicked(evt);
-            }
-        });
-
         jLabel16.setBackground(new java.awt.Color(255, 255, 255));
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
@@ -129,9 +129,7 @@ public class signup_page extends javax.swing.JFrame {
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(238, 238, 238)
-                .addComponent(jLabel15)
-                .addGap(50, 50, 50)
+                .addGap(354, 354, 354)
                 .addComponent(jLabel13)
                 .addGap(58, 58, 58))
         );
@@ -144,9 +142,7 @@ public class signup_page extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel15))
+                        .addComponent(jLabel13)
                         .addGap(36, 36, 36))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -194,7 +190,7 @@ public class signup_page extends javax.swing.JFrame {
         jPanel7.add(txt_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 350, -1));
 
         jLabel45.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel45.setText("Birthday:");
+        jLabel45.setText("Birthday (mm-dd-yyyy):");
         jPanel7.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, -1, 25));
         jPanel7.add(txt_bday, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 350, -1));
 
@@ -262,11 +258,11 @@ public class signup_page extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_fnActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        if (con != null) {
+       if (con != null) {
             if (txt_fn.getText().trim().isEmpty() || txt_ln.getText().trim().isEmpty() ||
                 txt_userN.getText().trim().isEmpty() || txt_email.getText().trim().isEmpty() ||
                 txt_bday.getText().trim().isEmpty() || txt_cn.getText().trim().isEmpty() ||
-                txt_pass.getText().trim().isEmpty() || txt_cpass.getText().trim().isEmpty() ) {
+                txt_pass.getText().trim().isEmpty() || txt_cpass.getText().trim().isEmpty()) {
 
                 JOptionPane.showMessageDialog(this, "Please fill in all required fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -274,6 +270,14 @@ public class signup_page extends javax.swing.JFrame {
 
             if (!cb_agree.isSelected()) {
                 JOptionPane.showMessageDialog(this, "Please read and accept our terms and conditions!", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            
+            String email = txt_email.getText().trim();
+            String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+            if (!email.matches(emailRegex)) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid email address.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -291,33 +295,31 @@ public class signup_page extends javax.swing.JFrame {
                     return;
                 }
 
-                 java.sql.Date bday;
-                    try {
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+                java.sql.Date bday;
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 
-                        LocalDate birthDate = LocalDate.parse(txt_bday.getText().trim(), formatter);
-                        LocalDate today = LocalDate.now();
-                        int age = Period.between(birthDate, today).getYears();
+                    LocalDate birthDate = LocalDate.parse(txt_bday.getText().trim(), formatter);
+                    LocalDate today = LocalDate.now();
+                    int age = Period.between(birthDate, today).getYears();
 
-                        if (age < 18) {
-                            JOptionPane.showMessageDialog(this, "You must be at least 18 years old to sign up.", "Age Restriction", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-
-                        bday = java.sql.Date.valueOf(birthDate);
-
-                    } catch (DateTimeParseException e) {
-                        JOptionPane.showMessageDialog(null, "Invalid birthday format. Use MM-DD-YYYY", "Input Error!", JOptionPane.ERROR_MESSAGE);
+                    if (age < 18) {
+                        JOptionPane.showMessageDialog(this, "You must be at least 18 years old to sign up.", "Age Restriction", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
 
-                
-                long contactNum;
+                    bday = java.sql.Date.valueOf(birthDate);
+
+                } catch (DateTimeParseException e) {
+                    JOptionPane.showMessageDialog(null, "Invalid birthday format. Use MM-DD-YYYY", "Input Error!", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
                 try {
                     String contactStr = txt_cn.getText().trim();
                     if (!contactStr.matches("\\d{11}")) {
-                    JOptionPane.showMessageDialog(null, "Contact number must be exactly 11 digits.", "Input Error", JOptionPane.ERROR_MESSAGE);
-                    return;
+                        JOptionPane.showMessageDialog(null, "Contact number must be exactly 11 digits.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                        return;
                     }
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(null, "Contact number must be digits only.", "Input Error", JOptionPane.ERROR_MESSAGE);
@@ -337,8 +339,8 @@ public class signup_page extends javax.swing.JFrame {
                 insertPs.setString(2, txt_ln.getText().trim());
                 insertPs.setString(3, txt_userN.getText().trim());
                 insertPs.setString(4, txt_email.getText().trim());
-                insertPs.setString(6, txt_cn.getText().trim());
                 insertPs.setDate(5, bday);
+                insertPs.setString(6, txt_cn.getText().trim());
                 insertPs.setString(7, pass);
 
                 int insertedRows = insertPs.executeUpdate();
@@ -366,9 +368,11 @@ public class signup_page extends javax.swing.JFrame {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
+
         } else {
             JOptionPane.showMessageDialog(this, "Failed to connect to database", "Connection Error", JOptionPane.ERROR_MESSAGE);
         }
+
             
 
     }//GEN-LAST:event_jButton6ActionPerformed

@@ -404,8 +404,8 @@ public class booking extends javax.swing.JFrame {
         int peoplePerRoom = switch (roomType) {
             case "Single Room" -> 2;
             case "Double Room" -> 4;
-            case "Triple Room" -> 4;
-            case "Quad Room" -> 6;
+            case "Triple Room" -> 6;
+            case "Quad Room" -> 8;
             default -> 1;
         };
 

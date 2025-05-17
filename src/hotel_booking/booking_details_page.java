@@ -165,7 +165,7 @@ public class booking_details_page extends javax.swing.JFrame{
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 810, 400));
 
-        cb_stat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Status", "Accepted", "Declined" }));
+        cb_stat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Status", "Completed", "Declined" }));
         jPanel1.add(cb_stat, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 140, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
