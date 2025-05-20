@@ -95,7 +95,6 @@ public class room_management_page1 extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         checkbox_addrn = new javax.swing.JCheckBox();
         jPanel10 = new javax.swing.JPanel();
-        jButton17 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -212,15 +211,6 @@ public class room_management_page1 extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(165, 157, 173));
 
-        jButton17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton17.setForeground(new java.awt.Color(32, 33, 67));
-        jButton17.setText("Booking Details");
-        jButton17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton17ActionPerformed(evt);
-            }
-        });
-
         jButton18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton18.setForeground(new java.awt.Color(32, 33, 67));
         jButton18.setText("Room Management");
@@ -260,7 +250,7 @@ public class room_management_page1 extends javax.swing.JFrame {
 
         jButton21.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton21.setForeground(new java.awt.Color(32, 33, 67));
-        jButton21.setText("Booking History");
+        jButton21.setText("Booking Details");
         jButton21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton21ActionPerformed(evt);
@@ -280,7 +270,6 @@ public class room_management_page1 extends javax.swing.JFrame {
                         .addGap(33, 33, 33)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel10Layout.createSequentialGroup()
@@ -293,15 +282,13 @@ public class room_management_page1 extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(46, 46, 46)
                 .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(34, 34, 34)
                 .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addGap(83, 83, 83)
                 .addComponent(jButton19)
                 .addContainerGap(128, Short.MAX_VALUE))
         );
@@ -563,36 +550,6 @@ public class room_management_page1 extends javax.swing.JFrame {
             
     }//GEN-LAST:event_checkbox_addrnActionPerformed
 
-    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-        booking_details_page n=new booking_details_page();
-        n.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton17ActionPerformed
-
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        room_management_page1 n=new room_management_page1();
-        n.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton18ActionPerformed
-
-    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-        admin_home n=new admin_home();
-        n.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jLabel12MouseClicked
-
-    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-        user_login n=new user_login();
-        n.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton19ActionPerformed
-
-    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        sales_report n=new sales_report();
-        n.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton20ActionPerformed
-
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         
         int row = jTable1.getSelectedRow(); 
@@ -633,10 +590,34 @@ public class room_management_page1 extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_room_numActionPerformed
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
-        adminhistory  adhis = new adminhistory();
-        adhis.setVisible(true);
+        booking_details_page n=new booking_details_page();
+        n.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton21ActionPerformed
+
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+        sales_report n=new sales_report();
+        n.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton20ActionPerformed
+
+    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
+        user_login n=new user_login();
+        n.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton19ActionPerformed
+
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+        admin_home n=new admin_home();
+        n.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jLabel12MouseClicked
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+        room_management_page1 n=new room_management_page1();
+        n.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton18ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -681,7 +662,6 @@ public class room_management_page1 extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cb_roomtype;
     private javax.swing.JComboBox<String> cb_status;
     private javax.swing.JCheckBox checkbox_addrn;
-    private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton20;

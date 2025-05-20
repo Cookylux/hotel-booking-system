@@ -9,6 +9,7 @@ import java.time.Period;
 import javax.swing.JOptionPane;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import javax.swing.JFrame;
 /**
  *
  * @author rieje
@@ -20,9 +21,12 @@ public class signup_page extends javax.swing.JFrame {
     /**
      * Creates new form signup_page
      */
-    public signup_page() {
+    private JFrame parentFrame;
+    public signup_page(JFrame parent) {
+        this.parentFrame = parent;
         initComponents();
         javaconnect.connectdb();
+        
     }
 
     /**
@@ -39,8 +43,6 @@ public class signup_page extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
@@ -62,6 +64,7 @@ public class signup_page extends javax.swing.JFrame {
         txt_ln = new javax.swing.JTextField();
         txt_cpass = new javax.swing.JPasswordField();
         txt_pass = new javax.swing.JPasswordField();
+        Back = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         jLabel15.setBackground(new java.awt.Color(255, 255, 255));
@@ -98,26 +101,6 @@ public class signup_page extends javax.swing.JFrame {
             }
         });
 
-        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Log-in");
-        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel13MouseClicked(evt);
-            }
-        });
-
-        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Stay");
-        jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel16MouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -125,13 +108,9 @@ public class signup_page extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addComponent(jLabel12)
-                .addGap(50, 50, 50)
-                .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 368, Short.MAX_VALUE)
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(354, 354, 354)
-                .addComponent(jLabel13)
-                .addGap(58, 58, 58))
+                .addGap(466, 466, 466))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,15 +119,8 @@ public class signup_page extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addGap(36, 36, 36))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel16))
-                        .addGap(34, 34, 34))))
+                .addComponent(jLabel12)
+                .addGap(34, 34, 34))
         );
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -175,7 +147,7 @@ public class signup_page extends javax.swing.JFrame {
                 confirmActionPerformed(evt);
             }
         });
-        jPanel7.add(confirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 376, -1, -1));
+        jPanel7.add(confirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 400, -1, -1));
 
         txt_fn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -231,6 +203,14 @@ public class signup_page extends javax.swing.JFrame {
         jPanel7.add(txt_cpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, 350, -1));
         jPanel7.add(txt_pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 350, -1));
 
+        Back.setText("Back");
+        Back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackActionPerformed(evt);
+            }
+        });
+        jPanel7.add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 60, -1));
+
         jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, 500, 450));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hotel_booking/hotelview.jpg"))); // NOI18N
@@ -267,13 +247,22 @@ public class signup_page extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Please fill in all required fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            
+            String nameRegex = "^[A-Za-z ]+$";
+            if (!txt_fn.getText().trim().matches(nameRegex)) {
+                JOptionPane.showMessageDialog(this, "First name must contain only letters.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
+            if (!txt_ln.getText().trim().matches(nameRegex)) {
+                JOptionPane.showMessageDialog(this, "Last name must contain only letters.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             if (!cb_agree.isSelected()) {
                 JOptionPane.showMessageDialog(this, "Please read and accept our terms and conditions!", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            
             String email = txt_email.getText().trim();
             String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
             if (!email.matches(emailRegex)) {
@@ -282,7 +271,7 @@ public class signup_page extends javax.swing.JFrame {
             }
 
             try {
-                String checkUserSQL = "SELECT * FROM GROUP4.SIGNUP WHERE firstname = ? AND lastname = ? AND username = ? AND email = ?";
+                String checkUserSQL = "SELECT * FROM SIGNUP WHERE firstname = ? AND lastname = ? AND username = ? AND email = ?";
                 ps = con.prepareStatement(checkUserSQL);
                 ps.setString(1, txt_fn.getText().trim());
                 ps.setString(2, txt_ln.getText().trim());
@@ -298,7 +287,6 @@ public class signup_page extends javax.swing.JFrame {
                 java.sql.Date bday;
                 try {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-
                     LocalDate birthDate = LocalDate.parse(txt_bday.getText().trim(), formatter);
                     LocalDate today = LocalDate.now();
                     int age = Period.between(birthDate, today).getYears();
@@ -316,9 +304,9 @@ public class signup_page extends javax.swing.JFrame {
                 }
 
                 try {
-                    String contactStr = txt_cn.getText().trim();
-                    if (!contactStr.matches("\\d{11}")) {
-                        JOptionPane.showMessageDialog(null, "Contact number must be exactly 11 digits.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                String contactStr = txt_cn.getText().trim();
+                    if (!contactStr.matches("09\\d{9}")) {
+                        JOptionPane.showMessageDialog(null, "Contact number must start with '09' and be exactly 11 digits.", "Input Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                 } catch (NumberFormatException e) {
@@ -329,11 +317,11 @@ public class signup_page extends javax.swing.JFrame {
                 String pass = txt_pass.getText();
                 String conpass = txt_cpass.getText();
                 if (!pass.equals(conpass)) {
-                    JOptionPane.showMessageDialog(null, "Password do not match!", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Passwords do not match!", "Input Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                String insertSQL = "INSERT INTO GROUP4.SIGNUP (firstname, lastname, username, email, birthday, contactnum, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                String insertSQL = "INSERT INTO SIGNUP (firstname, lastname, username, email, birthday, contactnum, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement insertPs = con.prepareStatement(insertSQL);
                 insertPs.setString(1, txt_fn.getText().trim());
                 insertPs.setString(2, txt_ln.getText().trim());
@@ -347,10 +335,9 @@ public class signup_page extends javax.swing.JFrame {
                 if (insertedRows > 0) {
                     JOptionPane.showMessageDialog(this, "Sign Up Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
                     Current.loggedInUsername = txt_userN.getText().trim();
-                    String check_in = BookingData.checkIn;
-                    String check_out = BookingData.checkOut;
+                    
 
-                    if (check_in == null || check_in.trim().isEmpty()) {
+                    if (TransferBookSpinner.InDate != null && TransferBookSpinner.OutDate != null) {
                         booking book = new booking();
                         book.setVisible(true);
                         this.setVisible(false);
@@ -358,7 +345,8 @@ public class signup_page extends javax.swing.JFrame {
                         loggedin_home_page loginhp = new loggedin_home_page();
                         loginhp.setVisible(true);
                         this.setVisible(false);
-                    }
+}
+
 
                 } else {
                     JOptionPane.showMessageDialog(this, "Error during sign-up.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -377,25 +365,20 @@ public class signup_page extends javax.swing.JFrame {
 
     }//GEN-LAST:event_confirmActionPerformed
 
-    private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel16MouseClicked
-
     private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel15MouseClicked
 
-    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        user_login n=new user_login();
-        n.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jLabel13MouseClicked
-
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-        signup_page n=new signup_page();
-        n.setVisible(true);
-        this.setVisible(false);
+
     }//GEN-LAST:event_jLabel12MouseClicked
+
+    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
+        this.dispose();             // close the Signup frame
+        if (parentFrame != null) {
+            parentFrame.setVisible(true);  // show the parent frame again
+        }     // TODO add your handling code here:
+    }//GEN-LAST:event_BackActionPerformed
    
     /**
      * @param args the command line arguments
@@ -427,20 +410,19 @@ public class signup_page extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new signup_page().setVisible(true);
+                new signup_page(null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Back;
     private javax.swing.JCheckBox cb_agree;
     private javax.swing.JButton confirm;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;

@@ -1,6 +1,8 @@
 package hotel_booking;
 import java.sql.*;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -21,6 +23,8 @@ public class user_login extends javax.swing.JFrame{
     public user_login() {
         initComponents();
         javaconnect.connectdb();
+        JPasswordField pass = new JPasswordField(20);
+        JCheckBox cb_show = new JCheckBox("Show Password");
      
     }
 
@@ -37,9 +41,6 @@ public class user_login extends javax.swing.JFrame{
         jPanel5 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -53,6 +54,7 @@ public class user_login extends javax.swing.JFrame{
         jLabel17 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         pass = new javax.swing.JPasswordField();
+        back = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -78,36 +80,6 @@ public class user_login extends javax.swing.JFrame{
             }
         });
 
-        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Log-in");
-        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel13MouseClicked(evt);
-            }
-        });
-
-        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Sign-up");
-        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel15MouseClicked(evt);
-            }
-        });
-
-        jLabel18.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Stay");
-        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel18MouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -115,15 +87,9 @@ public class user_login extends javax.swing.JFrame{
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addComponent(jLabel12)
-                .addGap(50, 50, 50)
-                .addComponent(jLabel18)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 368, Short.MAX_VALUE)
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(238, 238, 238)
-                .addComponent(jLabel15)
-                .addGap(50, 50, 50)
-                .addComponent(jLabel13)
-                .addGap(58, 58, 58))
+                .addGap(466, 466, 466))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,17 +98,8 @@ public class user_login extends javax.swing.JFrame{
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel15))
-                        .addGap(36, 36, 36))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel18))
-                        .addGap(34, 34, 34))))
+                .addComponent(jLabel12)
+                .addGap(34, 34, 34))
         );
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -218,6 +175,14 @@ public class user_login extends javax.swing.JFrame{
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, -1, -1));
         jPanel2.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 350, 30));
 
+        back.setText("Back");
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
+        jPanel2.add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, -1, -1));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, 498, 440));
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -235,51 +200,56 @@ public class user_login extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String selectedUserType = usertype.getSelectedItem().toString();
+       String selectedUserType = usertype.getSelectedItem().toString();
         String loginQuery = "";
 
-            if ("Admin".equalsIgnoreCase(selectedUserType)) {
-                loginQuery = "SELECT * FROM GROUP4.ADMIN WHERE username = ? AND password = ?";
-            } else if ("Customer".equalsIgnoreCase(selectedUserType)) {
-                loginQuery = "SELECT * FROM GROUP4.SIGNUP WHERE username = ? AND password = ?";
-            } else {
-                JOptionPane.showMessageDialog(null, "Invalid user type selected.");
-                return;
-            }
+        if ("Admin".equalsIgnoreCase(selectedUserType)) {
+            loginQuery = "SELECT * FROM admin WHERE username = ? AND password = ?";
+        } else if ("Customer".equalsIgnoreCase(selectedUserType)) {
+            loginQuery = "SELECT * FROM signup WHERE username = ? AND password = ?";
+        } else {
+            JOptionPane.showMessageDialog(null, "Invalid user type selected.");
+            return;
+        }
 
-            try {
-                ps = con.prepareStatement(loginQuery);
-                ps.setString(1, userN.getText().trim());
-                ps.setString(2, pass.getText().trim());
+        try {
+            ps = con.prepareStatement(loginQuery);
+            ps.setString(1, userN.getText().trim());
+            ps.setString(2, pass.getText().trim());
 
-                rs = ps.executeQuery();
-                if (rs.next()) {
-                    JOptionPane.showMessageDialog(null, "Login Successfully");
-                    Current.loggedInUsername = userN.getText().trim();
-                    if ("Admin".equalsIgnoreCase(selectedUserType)) {
-                        admin_home adminPage = new admin_home();
-                        adminPage.setVisible(true);
-                    } else {
-                        String check_in = BookingData.checkIn;
-                        String check_out = BookingData.checkOut;
+            rs = ps.executeQuery();
 
-                        if (check_in != null && !check_in.trim().isEmpty()) {
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Login Successfully");
 
-                            booking bookpage = new booking();
-                            bookpage.setVisible(true);
-                        } else {
-                            loggedin_home_page customerPage = new loggedin_home_page();
-                            customerPage.setVisible(true);
-                    }
-                    }
-                    this.setVisible(false);
+               
+                Current.loggedInUsername = userN.getText().trim();
+
+                if ("Admin".equalsIgnoreCase(selectedUserType)) {
+                    admin_home adminPage = new admin_home();
+                    adminPage.setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Wrong Username or Password!");
+                    
+                    if (TransferBookSpinner.InDate != null && TransferBookSpinner.OutDate != null) {
+                        booking book = new booking();
+                        book.setVisible(true);
+                        this.setVisible(false);
+                    } else {
+                        loggedin_home_page loginhp = new loggedin_home_page();
+                        loginhp.setVisible(true);
+                        this.setVisible(false);
+                    }
                 }
 
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+                this.setVisible(false);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Wrong Username or Password!");
             }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+        }
     
         
         
@@ -304,7 +274,7 @@ public class user_login extends javax.swing.JFrame{
     }//GEN-LAST:event_usertypeActionPerformed
 
     private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
-        signup_page n=new signup_page();
+        signup_page n=new signup_page(this);
         n.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jLabel17MouseClicked
@@ -319,22 +289,11 @@ public class user_login extends javax.swing.JFrame{
         this.setVisible(false);
     }//GEN-LAST:event_jLabel12MouseClicked
 
-    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        
-    }//GEN-LAST:event_jLabel13MouseClicked
-
-    private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
-        signup_page n=new signup_page();
-        n.setVisible(true);
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        home_page hPage = new home_page();
+        hPage.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jLabel15MouseClicked
-
-    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
-        stay_page n=new stay_page();
-        n.setVisible(true);
-        this.setVisible(false);
-        
-    }//GEN-LAST:event_jLabel18MouseClicked
+    }//GEN-LAST:event_backActionPerformed
 
     /**
      * @param args the command line arguments
@@ -372,17 +331,15 @@ public class user_login extends javax.swing.JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton back;
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;

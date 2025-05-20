@@ -29,24 +29,17 @@ public class javaconnect extends javax.swing.JFrame {
     private static ResultSet rs = null;
 
     public static Connection connectdb() {
+
         try {
-            // Load MySQL JDBC driver (optional for JDBC 4.0+ but good practice)
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // Update with your MySQL DB info
-            String url = "jdbc:mysql://localhost:3306/HOTELSYSTEM";
-            String user = "Group4";
-            String password = "12345";
-
-            con = DriverManager.getConnection(url, user, password);
+            con= DriverManager.getConnection("jdbc:derby://localhost:1527/HOTELSYSTEM", "Group4", "12345");
             stmt = con.createStatement();
             return con;
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(javaconnect.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
 
+    }
     public static Statement getStatement() {
         return stmt;
     }

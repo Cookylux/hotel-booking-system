@@ -57,35 +57,32 @@ public class booking extends javax.swing.JFrame {
     }
     private void loadcustomerdata(String username) {
         try {
-        String sql = "SELECT firstname, lastname, email, contactnum FROM SIGNUP WHERE username = ?";
-        PreparedStatement ps = con.prepareStatement(sql); 
-        ps.setString(1, Current.loggedInUsername); 
-        ResultSet rs = ps.executeQuery();
+            String sql = "SELECT firstname, lastname, email, contactnum FROM SIGNUP WHERE username = ?";
+            PreparedStatement ps = con.prepareStatement(sql); 
+            ps.setString(1, Current.loggedInUsername); 
+            ResultSet rs = ps.executeQuery();
 
-        if (rs.next()) {
-            String firstName = rs.getString("firstname");
-            String lastName = rs.getString("lastname");
-            String emailValue = rs.getString("email");
+            if (rs.next()) {
+                String firstName = rs.getString("firstname");
+                String lastName = rs.getString("lastname");
+                String emailValue = rs.getString("email");
 
+                if (firstName == null) firstName = "";
+                if (lastName == null) lastName = "";
 
-            if (firstName == null) firstName = "";
-            if (lastName == null) lastName = "";
+                name.setText((firstName + " " + lastName).trim());
 
-            name.setText((firstName + " " + lastName).trim());
-
-            if (emailValue != null) {
-                email.setText(emailValue);
+                email.setText(emailValue != null ? emailValue : "No email");
+                contact.setText(rs.getString("contactnum"));
             } else {
-                email.setText("No email");
+                System.out.println("No user found with username: " + Current.loggedInUsername);
             }
 
-            contact.setText(rs.getString("contactnum"));
-        } else {
-            System.out.println("No user found with username: " + Current.loggedInUsername);
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
     }
 
     private void updatePrice() {
@@ -108,71 +105,229 @@ public class booking extends javax.swing.JFrame {
     }
     private void loadAvailableRoomsByType(String roomType) {
     try {
-        String checkInText = check_in.getText().trim();
-        String checkOutText = check_out.getText().trim();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+            String checkInText = check_in.getText().trim();
+            String checkOutText = check_out.getText().trim();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 
-        long nights = 1;// default
-        LocalDate checkInDate = null;
-        LocalDate checkOutDate = null;
+            long nights = 1;
+            LocalDate checkInDate = null;
+            LocalDate checkOutDate = null;
 
-        if (!checkInText.isEmpty() && !checkOutText.isEmpty()) {
-            try {
-                checkInDate = LocalDate.parse(checkInText, formatter);
-                checkOutDate = LocalDate.parse(checkOutText, formatter);
-
-                if (!checkOutDate.isBefore(checkInDate)) {
-                    nights = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
-                }
-            } catch (DateTimeParseException e) {
-
-                nights = 1;
-            }
-        }
-
-        cb_roomnum.removeAllItems();
-        price.setText(null);
-
-
-        String query = "SELECT ROOMNUM, PRICE FROM ROOMMANAGEMENT1 " +
-               "WHERE ROOMTYPE = ? AND STATUS = 'Available' " +
-               "AND ROOMNUM NOT IN ( " +
-               "SELECT ROOMNUM FROM UNAVAILROOMS " +
-               "WHERE UNAVAILDATES BETWEEN ? AND ?)";
-        PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, roomType);
-    stmt.setDate(2, checkInDate != null ? java.sql.Date.valueOf(checkInDate) : java.sql.Date.valueOf(LocalDate.now()));
-    stmt.setDate(3, checkOutDate != null ? java.sql.Date.valueOf(checkOutDate.minusDays(1)) : java.sql.Date.valueOf(LocalDate.now()));
-
-        ResultSet rs = stmt.executeQuery();
-
-        NumberFormat php = NumberFormat.getCurrencyInstance(new Locale("en", "PH"));
-        boolean first = true;
-
-        while (rs.next()) {
-            cb_roomnum.addItem(rs.getString("ROOMNUM"));
-
-            if (first) {
+            if (!checkInText.isEmpty() && !checkOutText.isEmpty()) {
                 try {
-                    double pricePerNight = Double.parseDouble(rs.getString("PRICE"));
-                    double totalPrice = pricePerNight * nights;
+                    checkInDate = LocalDate.parse(checkInText, formatter);
+                    checkOutDate = LocalDate.parse(checkOutText, formatter);
 
-                    String priceInfo = "₱" + (int) pricePerNight + " x " + nights + " night(s) = " +
-                            php.format(totalPrice).replaceAll("\\.00$", "");
-                    price.setText(priceInfo);
-                } catch (NumberFormatException e) {
-                    price.setText("₱0");
+                    if (!checkOutDate.isBefore(checkInDate)) {
+                        nights = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+                    }
+                } catch (DateTimeParseException e) {
+                    nights = 1;
                 }
-                first = false;
             }
-        }
 
-        rs.close();
-        stmt.close();
-    } catch (Exception e) {
-        e.printStackTrace();
+            cb_roomnum.removeAllItems();
+            price.setText(null);
+
+            String query = """
+                SELECT ROOMNUM, PRICE FROM ROOMMANAGEMENT1
+                WHERE ROOMTYPE = ? AND STATUS = 'Available'
+                  AND ROOMNUM NOT IN (
+                      SELECT ROOMNUM FROM UNAVAILROOMS
+                      WHERE UNAVAILDATES BETWEEN ? AND ?
+                  )
+            """;
+
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setString(1, roomType);
+            stmt.setDate(2, checkInDate != null ? java.sql.Date.valueOf(checkInDate) : java.sql.Date.valueOf(LocalDate.now()));
+            stmt.setDate(3, checkOutDate != null ? java.sql.Date.valueOf(checkOutDate.minusDays(1)) : java.sql.Date.valueOf(LocalDate.now()));
+
+            ResultSet rs = stmt.executeQuery();
+
+            NumberFormat php = NumberFormat.getCurrencyInstance(new Locale("en", "PH"));
+            boolean first = true;
+
+            while (rs.next()) {
+                cb_roomnum.addItem(rs.getString("ROOMNUM"));
+
+                if (first) {
+                    try {
+                        double pricePerNight = rs.getDouble("PRICE");
+                        double totalPrice = pricePerNight * nights;
+
+                        String priceInfo = "₱" + (int) pricePerNight + " x " + nights + " night(s) = " +
+                                php.format(totalPrice).replaceAll("\\.00$", "");
+                        price.setText(priceInfo);
+                    } catch (NumberFormatException e) {
+                        price.setText("₱0");
+                    }
+                    first = false;
+                }
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-}
+    private void processBooking() {
+        java.sql.Date checkin = null;
+        java.sql.Date checkout = null;
+        String status = "Pending";
+        if (name.getText().trim().isEmpty() || contact.getText().trim().isEmpty() || email.getText().trim().isEmpty() ||
+        cb_gender.getSelectedItem() == null || cb_roomtype.getSelectedItem() == null || cb_roomnum.getSelectedItem() == null ||
+        spin_pax.getValue() == null) {
+
+        JOptionPane.showMessageDialog(this, "Please fill out all fields before proceeding.", "Missing Info", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+        try {
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+            LocalDate checkInDate = LocalDate.parse(check_in.getText().trim(), formatter);
+            LocalDate checkOutDate = LocalDate.parse(check_out.getText().trim(), formatter);
+
+            if (checkOutDate.isBefore(checkInDate)) {
+                JOptionPane.showMessageDialog(this, "Check-out date cannot be before Check-in date.", "Date Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (name.getText().trim().isEmpty() || contact.getText().trim().isEmpty() || email.getText().trim().isEmpty() ||
+                cb_gender.getSelectedItem() == null || cb_roomtype.getSelectedItem() == null || cb_roomnum.getSelectedItem() == null ||
+                spin_pax.getValue() == null) {
+
+                JOptionPane.showMessageDialog(this, "Please fill out all fields before proceeding.", "Missing Info", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            String nameRegex = "^[A-Za-z ]+$";
+            if (!name.getText().trim().matches(nameRegex)) {
+                JOptionPane.showMessageDialog(this, "Name contain only letters.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            String iemail = email.getText().trim();
+            String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+            if (!iemail.matches(emailRegex)) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid email address.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+             try {
+                String contactStr = contact.getText().trim();
+                    if (!contactStr.matches("09\\d{9}")) {
+                        JOptionPane.showMessageDialog(null, "Contact number must start with '09' and be exactly 11 digits.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Contact number must be digits only.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            
+            String selectedGender = cb_gender.getSelectedItem().toString();
+            if (selectedGender.equals("Select Gender")) {
+                JOptionPane.showMessageDialog(this, "Please select a valid gender.", "Input Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            int pax = Integer.parseInt(spin_pax.getValue().toString());
+            if (pax == 0){
+                JOptionPane.showMessageDialog(this, "Please input number of people.", "Input Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            String roomType = cb_roomtype.getSelectedItem().toString();
+            String roomNum = cb_roomnum.getSelectedItem().toString();
+
+            int capacity = switch (roomType) {
+                case "Single Room" -> 2;
+                case "Double Room", "Triple Room" -> 4;
+                case "Quad Room" -> 6;
+                default -> 1;
+            };
+
+            if (pax > capacity) {
+                JOptionPane.showMessageDialog(this,
+                    "Selected room type cannot accommodate this many guests.\n" +
+                    "Room type: " + roomType + "\n" +
+                    "Capacity: " + capacity + "\n" +
+                    "Guests: " + pax,
+                    "Capacity Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String availabilitySQL = "SELECT UNAVAILDATES FROM UNAVAILROOMS WHERE ROOMNUM = ?";
+            PreparedStatement ps = con.prepareStatement(availabilitySQL);
+            ps.setString(1, roomNum);
+            ResultSet rs = ps.executeQuery();
+
+            boolean conflict = false;
+            while (rs.next()) {
+                LocalDate unavailDate = rs.getDate("UNAVAILDATES").toLocalDate();
+                if (!unavailDate.isBefore(checkInDate) && unavailDate.isBefore(checkOutDate)) {
+                    conflict = true;
+                    break;
+                }
+            }
+            rs.close();
+            ps.close();
+
+            if (conflict) {
+                JOptionPane.showMessageDialog(this, "Selected room is not available during chosen dates.", "Room Unavailable", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            checkin = java.sql.Date.valueOf(checkInDate);
+            checkout = java.sql.Date.valueOf(checkOutDate);
+            String priceText = price.getText().trim();
+            double totalPrice = 0.0;
+            try {
+                String[] parts = priceText.split("=");
+                if (parts.length == 2) {
+                    String numericPart = parts[1].replaceAll("[^\\d.]", "");
+                    totalPrice = Double.parseDouble(numericPart);
+                }
+            } catch (Exception e) {
+                totalPrice = 0.0; // fallback if parsing fails
+            }
+            String insertSQL = "INSERT INTO BOOKINGS (name, contact, email, gender, checkin, checkout, pax, roomnum, roomtype, price, username, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement insertPs = con.prepareStatement(insertSQL);
+            insertPs.setString(1, name.getText().trim());
+            insertPs.setString(2, contact.getText().trim());
+            insertPs.setString(3, email.getText().trim());
+            insertPs.setString(4, cb_gender.getSelectedItem().toString());
+            insertPs.setDate(5, checkin);
+            insertPs.setDate(6, checkout);
+            insertPs.setString(7, String.valueOf(pax));
+            insertPs.setString(8, roomNum);
+            insertPs.setString(9, roomType);
+            insertPs.setString(10, String.valueOf(totalPrice)); 
+            insertPs.setString(11, Current.loggedInUsername);
+            insertPs.setString(12, status);
+            insertPs.executeUpdate();
+            insertPs.close();
+
+            String unavailableSQL = "INSERT INTO UNAVAILROOMS (ROOMNUM, UNAVAILDATES) VALUES (?, ?)";
+            PreparedStatement unavailablePs = con.prepareStatement(unavailableSQL);
+
+            for (LocalDate date = checkInDate; date.isBefore(checkOutDate); date = date.plusDays(1)) {
+                unavailablePs.setString(1, roomNum);
+                unavailablePs.setDate(2, java.sql.Date.valueOf(date));
+                unavailablePs.addBatch();
+            }
+
+            unavailablePs.executeBatch();
+            unavailablePs.close();
+            con.close();
+
+            JOptionPane.showMessageDialog(this, "Booking Successful!");
+            new loggedin_home_page().setVisible(true);
+            this.setVisible(false);
+
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Invalid date format. Use MM-DD-YYYY", "Date Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Something went wrong while processing the booking.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
 
     /**
@@ -212,6 +367,7 @@ public class booking extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         cb_roomtype = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
+        bt_home = new javax.swing.JButton();
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 1, 15)); // NOI18N
         jLabel7.setText("Children:");
@@ -352,6 +508,15 @@ public class booking extends javax.swing.JFrame {
         });
         jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, -1));
 
+        bt_home.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        bt_home.setText("Home");
+        bt_home.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_homeActionPerformed(evt);
+            }
+        });
+        jPanel3.add(bt_home, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 100, 40));
+
         getContentPane().add(jPanel3);
         jPanel3.setBounds(0, 0, 1060, 590);
 
@@ -365,114 +530,7 @@ public class booking extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel14MouseClicked
 
     private void proceedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proceedActionPerformed
-    java.sql.Date checkin = null;
-    java.sql.Date checkout = null;
-
-    try {
-        // Parse dates
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-        LocalDate checkInDate = LocalDate.parse(check_in.getText().trim(), formatter);
-        LocalDate checkOutDate = LocalDate.parse(check_out.getText().trim(), formatter);
-
-        checkin = java.sql.Date.valueOf(checkInDate);
-        checkout = java.sql.Date.valueOf(checkOutDate);
-
-    if (checkOutDate.isBefore(checkInDate)) {
-    JOptionPane.showMessageDialog(this, "Check-out date cannot be before Check-in date.", "Date Error", JOptionPane.ERROR_MESSAGE);
-    return;
-    }
-        checkin = java.sql.Date.valueOf(checkInDate);
-        checkout = java.sql.Date.valueOf(checkOutDate);
-
-        if (checkOutDate.isBefore(checkInDate)) {
-            JOptionPane.showMessageDialog(this, "Check-out date cannot be before Check-in date.", "Date Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (name.getText().trim().isEmpty() || contact.getText().trim().isEmpty() || email.getText().trim().isEmpty() ||
-            cb_gender.getSelectedItem() == null || cb_roomtype.getSelectedItem() == null || cb_roomnum.getSelectedItem() == null ||
-            spin_pax.getValue() == null) {
-
-            JOptionPane.showMessageDialog(this, "Please fill out all fields before proceeding.", "Missing Info", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
- 
-        int pax = Integer.parseInt(spin_pax.getValue().toString());
-        String roomType = cb_roomtype.getSelectedItem().toString();
-
-        int peoplePerRoom = switch (roomType) {
-            case "Single Room" -> 2;
-            case "Double Room" -> 4;
-            case "Triple Room" -> 6;
-            case "Quad Room" -> 8;
-            default -> 1;
-        };
-
-        if (pax > peoplePerRoom) {
-            JOptionPane.showMessageDialog(this,
-                "Total people exceed the capacity for the selected room(s).\n" +
-                "Room type: " + roomType + "\n" +
-                "Total capacity: " + peoplePerRoom + "\n" +
-                "People: " + pax,
-                "Room Capacity Exceeded", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        String priceText = price.getText();
-        double totalPrice = 0.0;
-
-        try {
-            String[] parts = priceText.split("=");
-            if (parts.length == 2) {
-                String totalPart = parts[1].replaceAll("[^\\d.]", "");
-                totalPrice = Double.parseDouble(totalPart);
-            }
-        } catch (Exception e) {
-            totalPrice = 0.0;
-        }
-
-        String insertSQL = "INSERT INTO GROUP4.BOOKINGS (name, contact, email, gender, checkin, checkout, pax, roomnum, roomtype, price, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement insertPs = con.prepareStatement(insertSQL);
-        insertPs.setString(1, name.getText().trim());
-        insertPs.setString(2, contact.getText().trim());
-        insertPs.setString(3, email.getText().trim());
-        insertPs.setString(4, cb_gender.getSelectedItem().toString().trim());
-        insertPs.setDate(5, checkin);
-        insertPs.setDate(6, checkout);
-        insertPs.setString(7, spin_pax.getValue().toString().trim());
-        insertPs.setString(8, cb_roomnum.getSelectedItem().toString().trim());
-        insertPs.setString(9, cb_roomtype.getSelectedItem().toString().trim());
-        insertPs.setString(10, String.valueOf(totalPrice));
-        insertPs.setString(11, Current.loggedInUsername);
-        
-        insertPs.executeUpdate();
-        insertPs.close();
-        
-        String roomNum = cb_roomnum.getSelectedItem().toString();
-
-        String unavailableSQL = "INSERT INTO UNAVAILROOMS (ROOMNUM, UNAVAILDATES) VALUES (?, ?)";
-        PreparedStatement unavailablePs = con.prepareStatement(unavailableSQL);
-
-        for (LocalDate date = checkInDate; date.isBefore(checkOutDate); date = date.plusDays(1)) {
-            unavailablePs.setString(1, roomNum);
-            unavailablePs.setDate(2, java.sql.Date.valueOf(date));
-            unavailablePs.addBatch();  // More efficient
-        }
-
-        unavailablePs.executeBatch();
-        unavailablePs.close();
-        con.close();
-
-        JOptionPane.showMessageDialog(this, "Booking Successful");
-        new loggedin_home_page().setVisible(true);
-        this.setVisible(false);
-
-    } catch (DateTimeParseException e) {
-        JOptionPane.showMessageDialog(this, "Invalid date format. Use MM-DD-YYYY", "Date Error", JOptionPane.ERROR_MESSAGE);
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Something went wrong while booking.", "Error", JOptionPane.ERROR_MESSAGE);
-    }    
+        processBooking();
     }//GEN-LAST:event_proceedActionPerformed
 
     private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
@@ -509,6 +567,12 @@ public class booking extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_cb_roomtypeActionPerformed
+
+    private void bt_homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_homeActionPerformed
+        loggedin_home_page n=new loggedin_home_page();
+        n.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bt_homeActionPerformed
     
     /**
      * @param args the command line arguments
@@ -553,6 +617,7 @@ public class booking extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_home;
     private javax.swing.JComboBox<String> cb_gender;
     private javax.swing.JComboBox<String> cb_roomnum;
     private javax.swing.JComboBox<String> cb_roomtype;
